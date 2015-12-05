@@ -15,7 +15,7 @@ var listObject = [
 
 [Uso LinqJs]
 //console.log(listObject.Order());
-//console.log(listObject.OrderBy(x => x.Id));
+//console.log(listObject.OrderBy(x => x.Id).ToList());
 //console.log(listObject.OrderByDesc(x => x.Id));
 //console.log(listObject.Where(x => x.Id >= 0 && x.Id <= 2 && x.List.Any(y => y.Id == 1)));
 //console.log(listObject.Any(x => x.Id == 0));
@@ -25,57 +25,67 @@ var listObject = [
 //console.log(listObject.Remove(x => x.Id == 0));
 //console.log(listObject.Skip(1).Take(1));
 */
+
+function ToList(lista) {
+    this.Array = lista;
+    this.ToList = toList;
+
+    function toList() {
+        return this.Array;
+    }
+}
+function EnumOrderBy(lista, conditon) {
+    ToList.call(this, lista);
+    this.Condition = [];
+
+    if (conditon != undefined) {
+        for (var i = 0; i < conditon.length; i++) {
+            this.Condition.push(conditon[i])
+        }
+    }
+}
+
+EnumOrderBy.prototype.ThenBy = function (conditon) {
+    var a = this.Condition;
+
+    var list = this.Array.OrderBy(conditon).ToList();
+
+    for (var i = a.length - 1; i >= 0 ; i--) {
+        list = list.OrderBy(a[i]).ToList();
+    }
+    this.Condition.push(conditon)
+
+    return new EnumOrderBy(list, this.Condition);
+}
+
 Array.prototype.Order = function () {
-    return this.sort(function (a, b) { return a - b });
+    return this.sort(function (a, b) {
+        return a - b;
+    });
 }
 Array.prototype.OrderBy = function (condition) {
-    var attr = this.Select(condition);
-    var list = [];
-    for (var i = 0 ; i < attr.length ; i++) {
-        list.push({
-            valor: attr[i],
-            indice: i
-        });
-    }
-    for (var i = 0 ; i < list.length ; i++) {
-        for (var j = i + 1 ; j < list.length ; j++) {
-            if (list[i].valor > list[j].valor) {
-                var a = list[j];
-                list[j] = list[i];
-                list[i] = a;
+    for (var i = 0 ; i < this.length ; i++) {
+        for (var j = i + 1 ; j < this.length ; j++) {
+            if (condition(this[i]) > condition(this[j])) {
+                var a = this[j];
+                this[j] = this[i];
+                this[i] = a;
             }
         }
     }
-    var listItem = [];
-    for (var i = 0 ; i < list.length ; i++) {
-        listItem.push(this[list[i].indice]);
-    }
-    return listItem;
+    return new EnumOrderBy(this, [condition]);
 }
 Array.prototype.OrderByDesc = function (condition) {
-    var attr = this.Select(condition);
-    var list = [];
-    for (var i = 0 ; i < attr.length ; i++) {
-        list.push({
-            valor: attr[i],
-            indice: i
-        });
-    }
-    for (var i = 0 ; i < list.length ; i++) {
-        for (var j = i + 1 ; j < list.length ; j++) {
-            if (list[i].valor < list[j].valor) {
-                var a = list[j];
-                list[j] = list[i];
-                list[i] = a;
+    for (var i = 0 ; i < this.length ; i++) {
+        for (var j = i + 1 ; j < this.length ; j++) {
+            if (condition(this[i]) < condition(this[j])) {
+                var a = this[j];
+                this[j] = this[i];
+                this[i] = a;
             }
-
         }
     }
-    var listItem = [];
-    for (var i = 0 ; i < list.length ; i++) {
-        listItem.push(this[list[i].indice]);
-    }
-    return listItem;
+    return new EnumOrderBy(this, [condition]);
 }
 Array.prototype.Where = function (condition) {
     if (condition == undefined) {
@@ -204,7 +214,7 @@ Array.prototype.Take = function (take) {
     return list;
 }
 Array.prototype.For = function (callback, indice) {
-    if (funcao == undefined) {
+    if (callback == undefined) {
         console.error('Callback não definido.')
         return;
     }
@@ -219,3 +229,20 @@ Array.prototype.For = function (callback, indice) {
         callback(i, this[i]);
     }
 }
+Array.prototype.Sum = function (conditon) {
+    var list = this.Select(conditon);
+
+    var sum = 0;
+
+    list.For(function (i, obj) {
+        sum += obj;
+    });
+
+    return sum;
+}
+Array.prototype.Max = function (conditon) {
+    var list = this.Select(conditon).Order();
+
+    return list[list.length - 1];
+}
+Array.prototype.Distinct = function () { }
