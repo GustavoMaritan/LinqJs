@@ -44,6 +44,36 @@ function EnumOrderBy(lista, conditon) {
         }
     }
 }
+function EnumGroupBy() {
+    this.Groups = [];
+    this.SetGroup = setGroup;
+    this.GetKeys = getKeys;
+
+    function setGroup(group) {
+        this.Groups.push(group);
+    }
+    function getKeys(group) {
+        var list = [];
+        for (var i = 0; i < this.Groups.length; i++)
+            list.push(this.Groups[i].Key)
+
+        return list;
+    }
+}
+function ObjGroupBy(keyValue, list) {
+    ToList.call(this, list);
+    this.Key = keyValue;
+}
+
+function getProperties(obj) {
+    var properties = [];
+    for (var prop in obj) {
+        if (typeof obj[prop] != 'function') {
+            properties.push(prop);
+        }
+    }
+    return properties;
+}
 
 EnumOrderBy.prototype.ThenBy = function (conditon) {
     var a = this.Condition;
@@ -52,6 +82,18 @@ EnumOrderBy.prototype.ThenBy = function (conditon) {
 
     for (var i = a.length - 1; i >= 0 ; i--) {
         list = list.OrderBy(a[i]).ToList();
+    }
+    this.Condition.push(conditon)
+
+    return new EnumOrderBy(list, this.Condition);
+}
+EnumOrderBy.prototype.ThenByDesc = function (conditon) {
+    var a = this.Condition;
+
+    var list = this.Array.OrderByDesc(conditon).ToList();
+
+    for (var i = a.length - 1; i >= 0 ; i--) {
+        list = list.OrderByDesc(a[i]).ToList();
     }
     this.Condition.push(conditon)
 
@@ -141,6 +183,9 @@ Array.prototype.FirstOrDefault = function (condition) {
             return this[i];
     }
     return null;
+}
+Array.prototype.First = function () {
+    return this[0];
 }
 Array.prototype.Select = function (condition) {
     if (condition == undefined) {
@@ -245,4 +290,103 @@ Array.prototype.Max = function (conditon) {
 
     return list[list.length - 1];
 }
-Array.prototype.Distinct = function () { }
+Array.prototype.GroupBy = function (conditon) {
+    if (this.length <= 0)
+        return [];
+
+    var list = new EnumGroupBy();
+
+    while (this.length > 0) {
+        var a = conditon(this[0])
+        var c = [];
+        for (var i = 0; i < this.length; i++) {
+            if (conditon(this[i]) == a)
+                c.push(this[i]);
+        }
+        for (var j = 0; j < this.length; j++) {
+            if (conditon(this[j]) == a)
+                this.splice(j, 1);
+        }
+        list.SetGroup(new ObjGroupBy(a, c));
+    }
+    return list;
+}
+Array.prototype.Distinct = function () {
+    var l = [];
+    for (var i = 0; i < this.length; i++) {
+        for (var k = i + 1; k < this.length; k++) {
+            if (dist(this[i], this[k]))
+                l.push({ i1: i, i2: k });
+        }
+    }
+    var la = [];
+    for (var g = 0; g < l.length; g++) {
+        if (la.indexOf(l[g].i2) == -1) {
+            la.push(l[g].i2);
+            this.splice(l[g].i2 - i, 1);
+        }
+    }
+    return this;
+
+    function dist(obj1, obj2) {
+        if (obj1.length > 0) {
+            return distList(obj1, obj2);
+        }
+        var a = getProperties(obj1);
+        var bl = false;
+        for (var j = 0; j < a.length; j++) {
+            if (typeof obj1[a[j]] == 'object') {
+                bl = dist(obj1[a[j]], obj2[a[j]]);
+                if (!bl) {
+                    break;
+                }
+            }
+            else if (obj1[a[j]] == obj2[a[j]]) {
+                bl = true;
+            } else {
+                bl = false;
+                break;
+            }
+        }
+        return bl;
+    }
+
+    function distList(obj1, obj2) {
+        if (obj1.length != obj2.length)
+            return false;
+
+        for (var i = 0; i < obj1.length; i++) {
+            if (!dist(obj1[i], obj2[i]))
+                return false;
+        }
+        return true;
+    }
+}
+Array.prototype.Count = function (conditon) {
+    if (conditon == undefined)
+        return this.length;
+
+    return this.Where(conditon).length;
+}
+Array.prototype.LastOrDefault = function (conditon) {
+    for (var i = this.length - 1; i > 0; i--) {
+        if (condition(this[i]))
+            return this[i];
+    }
+    return null;
+}
+Array.prototype.Last = function () {
+    return this[this.length - 1];
+}
+Array.prototype.AddRange = function (array) {
+    for (var i = 0; i < array.length; i++) {
+        this.push(array[i])
+    }
+}
+Array.prototype.Exist = function (conditon) {
+    for (var i = 0; i < this.length; i++) {
+        if (conditon(this[i]))
+            return true;
+    }
+    return false;
+}
