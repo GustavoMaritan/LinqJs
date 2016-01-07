@@ -24,6 +24,7 @@ var listObject = [
 //console.log(listObject.Select(x => g = { d: x.Id, c: x.List }));
 //console.log(listObject.Remove(x => x.Id == 0));
 //console.log(listObject.Skip(1).Take(1));
+//Teste mussak
 */
 
 function ToList(lista) {
