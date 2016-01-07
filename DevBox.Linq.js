@@ -131,7 +131,7 @@ Array.prototype.OrderByDesc = function (condition) {
     return new EnumOrderBy(this, [condition]);
 }
 Array.prototype.Where = function (condition) {
-    if (condition == undefined) {
+    if (!condition) {
         console.error('Informe a expressão para executar a tarefa.')
         return;
     }
@@ -145,7 +145,7 @@ Array.prototype.Where = function (condition) {
     return list;
 }
 Array.prototype.Any = function (condition) {
-    if (condition == undefined) {
+    if (!condition) {
         console.error('Informe a expressão para executar a tarefa.')
         return;
     }
@@ -153,16 +153,10 @@ Array.prototype.Any = function (condition) {
         if (condition(this[i]))
             return true;
     }
-    return cond;
-
-    //var cond = false;
-    //this.For(function (i , obj) {
-    //    if (condition(obj))
-    //        cond = true;
-    //})
+    return false;
 }
 Array.prototype.All = function (condition) {
-    if (condition == undefined) {
+    if (!condition) {
         console.error('Informe a expressão para executar a tarefa.')
         return;
     }
@@ -174,7 +168,7 @@ Array.prototype.All = function (condition) {
     return true;
 }
 Array.prototype.FirstOrDefault = function (condition) {
-    if (condition == undefined) {
+    if (!condition) {
         console.error('Informe a expressão para executar a tarefa.')
         return;
     }
@@ -189,7 +183,7 @@ Array.prototype.First = function () {
     return this[0];
 }
 Array.prototype.Select = function (condition) {
-    if (condition == undefined) {
+    if (!condition) {
         console.error('Informe a expressão para executar a tarefa.')
         return;
     }
@@ -201,7 +195,7 @@ Array.prototype.Select = function (condition) {
     return list;
 }
 Array.prototype.Remove = function (condition) {
-    if (condition == undefined) {
+    if (!condition) {
         console.error('Informe a expressão para executar a tarefa.')
         return;
     }
@@ -212,7 +206,7 @@ Array.prototype.Remove = function (condition) {
     }
 }
 Array.prototype.Single = function (attr, condition) {
-    if (condition == undefined)
+    if (!condition)
         return this.length == 0
             ? null
             : attr(this[0])
