@@ -1,4 +1,4 @@
-module.exports = lisqJs(); 
+module.exports = lisqJs();
 
 function lisqJs() {
     let Array = global.Array;
@@ -50,7 +50,7 @@ function lisqJs() {
         }
         return properties;
     }
-    EnumOrderBy.prototype.ThenBy = function(conditon) {
+    EnumOrderBy.prototype.ThenBy = function (conditon) {
         let a = this.Condition;
 
         let list = this.Array.OrderBy(conditon).ToList();
@@ -62,7 +62,7 @@ function lisqJs() {
 
         return new EnumOrderBy(list, this.Condition);
     };
-    EnumOrderBy.prototype.ThenByDesc = function(conditon) {
+    EnumOrderBy.prototype.ThenByDesc = function (conditon) {
         let a = this.Condition;
 
         let list = this.Array.OrderByDesc(conditon).ToList();
@@ -74,12 +74,12 @@ function lisqJs() {
 
         return new EnumOrderBy(list, this.Condition);
     };
-    Array.prototype.Order = function() {
-        return this.sort(function(a, b) {
+    Array.prototype.Order = function () {
+        return this.sort(function (a, b) {
             return a - b;
         });
     };
-    Array.prototype.OrderBy = function(condition) {
+    Array.prototype.OrderBy = function (condition) {
         for (let i = 0; i < this.length; i++) {
             for (let j = i + 1; j < this.length; j++) {
                 if (condition(this[i]) > condition(this[j])) {
@@ -91,7 +91,7 @@ function lisqJs() {
         }
         return new EnumOrderBy(this, [condition]);
     };
-    Array.prototype.OrderByDesc = function(condition) {
+    Array.prototype.OrderByDesc = function (condition) {
         for (let i = 0; i < this.length; i++) {
             for (let j = i + 1; j < this.length; j++) {
                 if (condition(this[i]) < condition(this[j])) {
@@ -103,7 +103,7 @@ function lisqJs() {
         }
         return new EnumOrderBy(this, [condition]);
     };
-    Array.prototype.Where = function(condition) {
+    Array.prototype.Where = function (condition) {
         if (condition === undefined) {
             console.error('Informe a expressão para executar a tarefa.')
             return;
@@ -111,7 +111,7 @@ function lisqJs() {
 
         return list.filter(condition);
     };
-    Array.prototype.Any = function(condition) {
+    Array.prototype.Any = function (condition) {
         if (condition === undefined) {
             return this.length > 0;
         }
@@ -127,7 +127,7 @@ function lisqJs() {
         //        cond = true;
         //})
     };
-    Array.prototype.All = function(condition) {
+    Array.prototype.All = function (condition) {
         if (condition === undefined) {
             console.error('Informe a expressão para executar a tarefa.');
             return;
@@ -139,7 +139,7 @@ function lisqJs() {
         }
         return true;
     };
-    Array.prototype.FirstOrDefault = function(condition) {
+    Array.prototype.FirstOrDefault = function (condition) {
         if (condition === undefined) {
             console.error('Informe a expressão para executar a tarefa.');
             return;
@@ -151,18 +151,18 @@ function lisqJs() {
         }
         return {};
     };
-    Array.prototype.First = function() {
+    Array.prototype.First = function () {
         return this[0];
     };
-    Array.prototype.Select = function(condition) {
+    Array.prototype.Select = function (condition) {
         if (condition === undefined) {
             console.error('Informe a expressão para executar a tarefa.');
             return;
         }
-	
-	return this.map(condition)
+
+        return this.map(condition)
     };
-    Array.prototype.Remove = function(condition) {
+    Array.prototype.Remove = function (condition) {
         if (condition == undefined) {
             console.error('Informe a expressão para executar a tarefa.')
             return;
@@ -173,7 +173,7 @@ function lisqJs() {
                 this.splice(i, 1);
         }
     };
-    Array.prototype.Single = function(attr, condition) {
+    Array.prototype.Single = function (attr, condition) {
         if (condition == undefined)
             return this.length == 0
                 ? null
@@ -185,7 +185,7 @@ function lisqJs() {
         }
         return null;
     };
-    Array.prototype.Skip = function(skip) {
+    Array.prototype.Skip = function (skip) {
         if (skip == undefined || isNaN(skip)) {
             console.error('Informe um valor válido.');
             return;
@@ -198,17 +198,17 @@ function lisqJs() {
         if (skip > this.length)
             skip = this.length;
 
-	return this.slice(skip);
+        return this.slice(skip);
     };
-    Array.prototype.Take = function(take) {
+    Array.prototype.Take = function (take) {
         if (take == undefined || isNaN(take)) {
             console.error('Informe um valor válido.');
             return;
         }
-	
+
         return this.slice(0, take);
     };
-    Array.prototype.For = function(callback, indice) {
+    Array.prototype.For = function (callback, indice) {
         if (callback == undefined) {
             console.error('Callback não definido.')
             return;
@@ -224,44 +224,46 @@ function lisqJs() {
             callback(i, this[i]);
         }
     };
-    Array.prototype.Sum = function(conditon) {
+    Array.prototype.Sum = function (conditon) {
         let list = this.Select(conditon);
 
         let sum = 0;
 
-        list.For(function(i, obj) {
+        list.For(function (i, obj) {
             sum += obj;
         });
 
         return sum;
     };
-    Array.prototype.Max = function(conditon) {
+    Array.prototype.Max = function (conditon) {
         let list = this.Select(conditon).Order();
 
         return list[list.length - 1];
     };
-    Array.prototype.GroupBy = function(conditon) {
+    Array.prototype.GroupBy = function (conditon) {
         if (this.length <= 0)
             return [];
 
-        let list = new EnumGroupBy();
+        var list = new EnumGroupBy();
 
         while (this.length > 0) {
-            let a = conditon(this[0])
-            let c = [];
-            for (let i = 0; i < this.length; i++) {
-                if (conditon(this[i]) == a)
+            var a = conditon(this[0]);
+            var c = [];
+            var excludeList = [];
+            for (var i = 0; i < this.length; i++) {
+                if (conditon(this[i]) == a) {
                     c.push(this[i]);
+                    excludeList.push(i);
+                }
             }
-            for (let j = 0; j < this.length; j++) {
-                if (conditon(this[j]) == a)
-                    this.splice(j, 1);
+            for (var j = excludeList.length - 1; j >= 0; j--) {
+                this.splice(excludeList[j], 1);
             }
             list.SetGroup(new ObjGroupBy(a, c));
         }
         return list;
     };
-    Array.prototype.Distinct = function() {
+    Array.prototype.Distinct = function () {
         let l = [];
         for (let i = 0; i < this.length; i++) {
             for (let k = i + 1; k < this.length; k++) {
@@ -312,13 +314,13 @@ function lisqJs() {
             return true;
         }
     };
-    Array.prototype.Count = function(conditon) {
+    Array.prototype.Count = function (conditon) {
         if (conditon == undefined)
             return this.length;
 
         return this.Where(conditon).length;
     };
-    Array.prototype.LastOrDefault = function(conditon) {
+    Array.prototype.LastOrDefault = function (conditon) {
         for (let i = this.length - 1; i > 0; i--) {
             if (condition(this[i]))
                 return this[i];
@@ -326,13 +328,13 @@ function lisqJs() {
         return {};
     };
 
-    Array.prototype.Last = function() {
+    Array.prototype.Last = function () {
         return this[this.length - 1];
     };
-    Array.prototype.AddRange = function(array) {
+    Array.prototype.AddRange = function (array) {
         return x.concat(array);
     };
-    Array.prototype.Exist = function(conditon) {
+    Array.prototype.Exist = function (conditon) {
         for (let i = 0; i < this.length; i++) {
             if (conditon(this[i]))
                 return true;
