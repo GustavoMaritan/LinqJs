@@ -108,8 +108,7 @@ function lisqJs() {
             console.error('Informe a expressão para executar a tarefa.')
             return;
         }
-
-        return list.filter(condition);
+        return this.filter(condition);
     };
     Array.prototype.Any = function (condition) {
         if (condition === undefined) {
@@ -120,19 +119,12 @@ function lisqJs() {
                 return true;
         }
         return false;
-
-        //let cond = false;
-        //this.For(function (i , obj) {
-        //    if (condition(obj))
-        //        cond = true;
-        //})
     };
     Array.prototype.All = function (condition) {
         if (condition === undefined) {
             console.error('Informe a expressão para executar a tarefa.');
             return;
         }
-
         for (let i = 0; i < this.length; i++) {
             if (!condition(this[i]))
                 return false;
@@ -144,6 +136,15 @@ function lisqJs() {
             console.error('Informe a expressão para executar a tarefa.');
             return;
         }
+        for (let i = 0; i < this.length; i++) {
+            if (condition(this[i]))
+                return this[i];
+        }
+        return {};
+    };
+    Array.prototype.First = function (condition) {
+        if (condition === undefined)
+            return this[0];
 
         for (let i = 0; i < this.length; i++) {
             if (condition(this[i]))
@@ -151,33 +152,28 @@ function lisqJs() {
         }
         return {};
     };
-    Array.prototype.First = function () {
-        return this[0];
-    };
     Array.prototype.Select = function (condition) {
         if (condition === undefined) {
             console.error('Informe a expressão para executar a tarefa.');
             return;
         }
-
-        return this.map(condition)
+        return this.map(condition);
     };
     Array.prototype.Remove = function (condition) {
-        if (condition == undefined) {
+        if (condition === undefined) {
             console.error('Informe a expressão para executar a tarefa.')
             return;
         }
-
         for (let i = 0; i < this.length; i++) {
             if (condition(this[i]))
                 this.splice(i, 1);
         }
     };
     Array.prototype.Single = function (attr, condition) {
-        if (condition == undefined)
-            return this.length == 0
+        if (condition === undefined)
+            return this.length === 0
                 ? null
-                : attr(this[0])
+                : attr(this[0]);
 
         for (let i = 0; i < this.length; i++) {
             if (condition(this[i]))
@@ -186,7 +182,7 @@ function lisqJs() {
         return null;
     };
     Array.prototype.Skip = function (skip) {
-        if (skip == undefined || isNaN(skip)) {
+        if (skip === undefined || isNaN(skip)) {
             console.error('Informe um valor válido.');
             return;
         }
@@ -201,19 +197,18 @@ function lisqJs() {
         return this.slice(skip);
     };
     Array.prototype.Take = function (take) {
-        if (take == undefined || isNaN(take)) {
+        if (take === undefined || isNaN(take)) {
             console.error('Informe um valor válido.');
             return;
         }
-
         return this.slice(0, take);
     };
     Array.prototype.For = function (callback, indice) {
-        if (callback == undefined) {
-            console.error('Callback não definido.')
+        if (callback === undefined) {
+            console.error('Callback não definido.');
             return;
         }
-        if (indice == undefined || isNaN(indice))
+        if (indice === undefined || isNaN(indice))
             indice = 0;
         if (indice > this.length)
             indice = this.length;
@@ -229,9 +224,7 @@ function lisqJs() {
 
         let sum = 0;
 
-        list.For(function (i, obj) {
-            sum += obj;
-        });
+        list.For(function (i, obj) { sum += obj; });
 
         return sum;
     };
@@ -315,7 +308,7 @@ function lisqJs() {
         }
     };
     Array.prototype.Count = function (conditon) {
-        if (conditon == undefined)
+        if (conditon === undefined)
             return this.length;
 
         return this.Where(conditon).length;
@@ -327,9 +320,15 @@ function lisqJs() {
         }
         return {};
     };
+    Array.prototype.Last = function (condition) {
+        if (condition === undefined)
+            return this[this.length - 1];
 
-    Array.prototype.Last = function () {
-        return this[this.length - 1];
+        for (let i = this.length - 1 ; i >= 0; i--) {
+            if (condition(this[i]))
+                return this[i];
+        }
+        return {};
     };
     Array.prototype.AddRange = function (array) {
         return x.concat(array);
