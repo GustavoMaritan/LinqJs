@@ -331,7 +331,10 @@ function lisqJs() {
         return {};
     };
     Array.prototype.AddRange = function (array) {
-        return x.concat(array);
+        if(array === undefined)
+            return;
+            
+        array.map(x => this.push(x));
     };
     Array.prototype.Exist = function (conditon) {
         for (let i = 0; i < this.length; i++) {
