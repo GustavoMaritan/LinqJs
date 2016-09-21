@@ -1,8 +1,6 @@
 
 [![Build Status](https://travis-ci.org/rafael-pinho/LinqJs.svg?branch=master)](https://travis-ci.org/rafael-pinho/module-proxy)
 [![bitHound Overall Score](https://www.bithound.io/github/GustavoMaritan/LinqJs/badges/score.svg)](https://www.bithound.io/github/GustavoMaritan/LinqJs)
-[![bitHound Dev Dependencies](https://www.bithound.io/github/GustavoMaritan/LinqJs/badges/devDependencies.svg)](https://www.bithound.io/github/GustavoMaritan/LinqJs/master/dependencies/npm)
-[![bitHound Code](https://www.bithound.io/github/GustavoMaritan/LinqJs/badges/code.svg)](https://www.bithound.io/github/GustavoMaritan/LinqJs)
 
 ##DEVBOX-LINQ
 
