@@ -1,3 +1,5 @@
+https://travis-ci.org/rafael-pinho/LinqJs.svg?branch=master
+
 ##DEVBOX-LINQ
 
 Lambda style operations for nodejs.
