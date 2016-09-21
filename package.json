@@ -2,7 +2,7 @@
   "name": "devbox-linq",
   "version": "2.0.3",
   "description": "Lambda style operations using arrow functions",
-  "main": "devBox.Linq.js",
+  "main": "./lib/index.js",
   "author": "Gustavo Maritan",
   "repository": {
     "type": "git",
@@ -16,5 +16,12 @@
   "bugs": {
     "url": "https://github.com/GustavoMaritan/LinqJs/issues"
   },
-  "homepage": "https://github.com/GustavoMaritan/LinqJs#readme"
+  "homepage": "https://github.com/GustavoMaritan/LinqJs#readme",
+  "devDependencies": {
+    "assert": "^1.4.1",
+    "mocha": "^3.0.2"
+  },
+  "scripts": {
+    "test": "mocha"
+  }
 }
