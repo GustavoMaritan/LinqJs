@@ -32,7 +32,7 @@ let array = [
 
 ```
 
-[AddRange](#AddRange)
+* [AddRange](#add-range)
 - All
 - Any 
 - Count
@@ -59,8 +59,7 @@ let array = [
 - Distinct
 
 
-
---------------------
+---------------------------------------
 
 ### AddRange
 ```javascript
