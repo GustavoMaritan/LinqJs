@@ -31,35 +31,44 @@ let array = [
 ]
 
 ```
+### Functions
 
 * [AddRange](#add-range)
-- All
-- Any 
-- Count
-- Exist
-- First
-- Last
-- For
-- Max
-- Remove 
-- Select
-- Where 
-- Sum
-- Take
-- Skip
-- Single
-- Order
-- OrderBy
- - ThenBy
- - ThenByDesc
-- OrderByDesc 
- - ThenBy
- - ThenByDesc
-- GroupBy
-- Distinct
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 ---------------------------------------
+
+## Functions
 
 ### AddRange (list, expression)
 
