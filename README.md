@@ -61,7 +61,8 @@ let array = [
 
 ---------------------------------------
 
-### AddRange
+### AddRange (list, expression)
+
 ```javascript
 newArray.AddRange(array)
 newArray2.AddRange(array, x => x.value > 20)
