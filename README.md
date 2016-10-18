@@ -32,7 +32,7 @@ let array = [
 
 ```
 
-[AddRange](#addRange)
+[AddRange](#AddRange)
 - All
 - Any 
 - Count
