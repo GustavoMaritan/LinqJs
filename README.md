@@ -32,8 +32,38 @@ let array = [
 
 ```
 
-- AddRange
-```
+[AddRange](#addRange)
+- All
+- Any 
+- Count
+- Exist
+- First
+- Last
+- For
+- Max
+- Remove 
+- Select
+- Where 
+- Sum
+- Take
+- Skip
+- Single
+- Order
+- OrderBy
+ - ThenBy
+ - ThenByDesc
+- OrderByDesc 
+ - ThenBy
+ - ThenByDesc
+- GroupBy
+- Distinct
+
+
+
+--------------------
+
+### AddRange
+```javascript
 newArray.AddRange(array)
 newArray2.AddRange(array, x => x.value > 20)
 ```
