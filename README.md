@@ -10,19 +10,120 @@ Lambda style operations for nodejs.
 
 Check the operation list below.
 
+```
+
+let array = [
+    {
+        id: 1,
+        name: 'Test 1',
+        value: 20
+    },
+    {
+        id: 2,
+        name: 'Test 2',
+        value: 30
+    },
+    {
+        id: 3,
+        name: 'Test 3',
+        value: 40
+    },
+]
+
+```
+
 - AddRange
-- All 
+```
+newArray.AddRange(array)
+newArray2.AddRange(array, x => x.value > 20)
+```
+
+- All
+```
+array.All(x => x.value >= 40)   --> false
+``` 
+
 - Any 
+```
+array.Any(x => x.value >= 40)   --> true
+array.Any(x => x.value > 40)    --> false
+array.Any()                     --> true
+``` 
+
 - Count
-- Distinct
+```
+array.Count(x => x.value >= 40) --> 1
+array.Count()                   --> 3
+``` 
+
 - Exist
+```
+array.Exist(x => x.name == 'Test 2') --> true
+``` 
+
 - First
 - FirstOrDefault 
-- For
-- GroupBy
+```
+array.First()                   --> { id: 1, name: 'Test 1', value: 20 }
+array.First(x => x.value > 10)  --> { id: 1, name: 'Test 1', value: 20 }
+array.First(x => x.value > 40)  --> {}
+
+``` 
+
 - Last
 - LastOrDefault
+```
+array.Last()                    --> { id: 3, name: 'Test 3', value: 40 }
+array.Last(x => x.value > 10)   --> { id: 3, name: 'Test 3', value: 40 }
+array.Last(x => x.value > 40)   --> {}
+
+``` 
+
+- For
+```
+array.For((obj, index) => { console.log(obj) });
+array.For((obj, index) => { console.log(obj) }, 2(start index));
+``` 
+
 - Max
+```
+array.Max(x => x.value) --> { id: 3, name: 'Test 3', value: 40 }
+``` 
+
+- Remove 
+```
+array.Remove(x => x.value > 30)
+``` 
+
+- Select == [].map
+```
+array.Select(x => x.value)                       --> [ 20, 30, 40 ]
+array.Select(x => a = { f: x.value, g: x.name }) --> [{ f: 20, g: 'Test 1' },{ f: 30, g: 'Test 2' },{ f: 40, g: 'Test 3' }]
+``` 
+- Where 
+```
+array.Where(x => x.value > 30) --> [{ id: 3, name: 'Test 3', value: 40 }]
+```
+
+- Sum
+```
+array.Sum(x => x.value) --> 90
+```
+- Take
+```
+array.Take(2) --> [{ id: 1, name: 'Test 1', value: 20 },{ id: 2, name: 'Test 2', value: 30 }]
+```
+
+- Skip
+```
+array.Skip(1) --> [{ id: 2, name: 'Test 2', value: 30 },{ id: 3, name: 'Test 3', value: 40 }]
+```
+
+- Single
+```
+array.Single(x => x.name, y => y.value > 20) --> 'Test 2'
+```
+
 - Order
 - OrderBy
  - ThenBy
@@ -30,10 +131,6 @@ Check the operation list below.
 - OrderByDesc 
  - ThenBy
  - ThenByDesc
-- Remove 
-- Select 
-- Single
-- Skip
-- Sum
-- Take
-- Where 
+- GroupBy
+- Distinct
+

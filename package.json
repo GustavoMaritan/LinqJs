@@ -1,6 +1,6 @@
 {
   "name": "devbox-linq",
-  "version": "2.1.3",
+  "version": "3.0.0",
   "description": "Lambda style operations using arrow functions",
   "main": "./lib/index.js",
   "author": "Gustavo Maritan",
