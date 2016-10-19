@@ -20,29 +20,7 @@ require('devbox-linq');
 
 Check the operation list below.
 
-```
-
-let array = [
-    {
-        id: 1,
-        name: 'Test 1',
-        value: 20
-    },
-    {
-        id: 2,
-        name: 'Test 2',
-        value: 30
-    },
-    {
-        id: 3,
-        name: 'Test 3',
-        value: 40
-    },
-]
-
-```
-
-* [Range](#addrange)
+* [AddRange](#add-range)
 
 - All
 - Any 
@@ -69,10 +47,32 @@ let array = [
 - GroupBy
 - Distinct
 
-
 ---------------------------------------
 
-### Range (list, expression)
+### Example
+```javascript
+
+let array = [
+    {
+        id: 1,
+        name: 'Test 1',
+        value: 20
+    },
+    {
+        id: 2,
+        name: 'Test 2',
+        value: 30
+    },
+    {
+        id: 3,
+        name: 'Test 3',
+        value: 40
+    },
+]
+
+```
+
+### AddRange (list, expression)
 
 ```javascript
 newArray.AddRange(array)
