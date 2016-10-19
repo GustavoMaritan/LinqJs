@@ -28,20 +28,35 @@ Check the operation list below.
 * [Any](#any-expression)
 * [Exist](#exist-expression)
 
-* [AddRange](#addrange-list-expression)
+### OBJECT RETURN
 
-- Count
-- First
-- Last
-- For
-- Max
-- Remove 
-- Select
-- Where 
-- Sum
-- Take
-- Skip
-- Single
+* [First](#first-expression)
+* [Last](#last-expression)
+* [Single](#where-attribute-expression)
+* [Select](#select-expression)
+* [Where](#where-expression)
+* [Take](#take-amount)
+* [Skip](#skip-start)
+* [Distinct](#distinct-expression)
+* [GroupBy](#groupby-expression)
+
+### ARRAY
+
+* [AddRange](#addrange-list-expression)
+* [Remove](#remove-expression)
+
+### LOOP
+
+* [For](#for-callback-starts-index)
+
+### AGGREGATION
+
+* [Count](#count-expression)
+* [Max](#max-expression)
+* [Sum](#sum-expression)
+
+### ORDER
+
 - Order
 - OrderBy
  - ThenBy
@@ -49,8 +64,6 @@ Check the operation list below.
 - OrderByDesc 
  - ThenBy
  - ThenByDesc
-- GroupBy
-- Distinct
 
 ---------------------------------------
 
@@ -73,7 +86,7 @@ let array = [
         name: 'Test 3',
         value: 40
     },
-]
+];
 
 ```
 
@@ -84,97 +97,116 @@ let array = [
     array.All(x => x.value >= 40);  // false
 ``` 
 
-### Any ([expression])
+### Any (expression)
 ```javascript
-array.Any(x => x.value >= 40)   // true
-array.Any(x => x.value > 40)    // false
-array.Any()                     // true
+    array.Any(x => x.value >= 40);   // true
+    array.Any(x => x.value > 40);    // false
+    array.Any();                     // true
 ``` 
 
-### Exist ([expression])
+### Exist (expression)
 ```javascript
-array.Exist(x => x.name == 'Test 2') // true
+    array.Exist(x => x.name == 'Test 2'); // true
 ``` 
 
 ---------------------------------------
 
-### AddRange (list, [expression])
+## OBJECT RETURN
 
+### First (expression)
 ```javascript
+    array.First();                   // { id: 1, name: 'Test 1', value: 20 }
+    array.First(x => x.value > 10);  // { id: 1, name: 'Test 1', value: 20 }
+    array.First(x => x.value > 40);  // {}
+
+``` 
+
+### Last (expression)
+```javascript
+    array.Last();                    // { id: 3, name: 'Test 3', value: 40 }
+    array.Last(x => x.value > 10);   // { id: 3, name: 'Test 3', value: 40 }
+    array.Last(x => x.value > 40);   // {}
+
+``` 
+
+### Single (attribute,expression)
+```javascript
+    array.Single(x => x.name, y => y.value > 20); // 'Test 2'
+```
+
+### Select (expression)
+```javascript
+    array.Select(x => x.value);                       // [ 20, 30, 40 ]
+    array.Select(x => a = { f: x.value, g: x.name }); // [{ f: 20, g: 'Test 1' },{ f: 30, g: 'Test 2' },{ f: 40, g: 'Test 3' }]
+``` 
+
+### Where (expression)
+```javascript
+    array.Where(x => x.value > 30); // [{ id: 3, name: 'Test 3', value: 40 }]
+```
+
+### Take (amount)
+```javascript
+    array.Take(2); // [{ id: 1, name: 'Test 1', value: 20 },{ id: 2, name: 'Test 2', value: 30 }]
+```
+
+### Skip (start)
+```javascript
+    array.Skip(1); // [{ id: 2, name: 'Test 2', value: 30 },{ id: 3, name: 'Test 3', value: 40 }]
+```
+
+--Distinct
+--GroupBy
+
+---------------------------------------
+
+### ARRAY
+
+### AddRange (list, expression)
+```javascript
+    let newArray = [],
+        newArray2 = [];
+
     newArray.AddRange(array)
     newArray2.AddRange(array, x => x.value > 20)
 ```
 
-- Count
-```
-array.Count(x => x.value >= 40) --> 1
-array.Count()                   --> 3
+### Remove (expression)
+```javascript
+    array.Remove(x => x.value > 30)
 ``` 
 
+---------------------------------------
 
+## LOOP
 
-- First
-- FirstOrDefault 
-```
-array.First()                   --> { id: 1, name: 'Test 1', value: 20 }
-array.First(x => x.value > 10)  --> { id: 1, name: 'Test 1', value: 20 }
-array.First(x => x.value > 40)  --> {}
-
+### For (callback,startIndex)
+```javascript
+    array.For((obj, index) => { console.log(obj) });
+    array.For((obj, index) => { console.log(obj) }, 2);
 ``` 
 
-- Last
-- LastOrDefault
-```
-array.Last()                    --> { id: 3, name: 'Test 3', value: 40 }
-array.Last(x => x.value > 10)   --> { id: 3, name: 'Test 3', value: 40 }
-array.Last(x => x.value > 40)   --> {}
+---------------------------------------
 
+## AGGREGATION
+
+### Count (expression)
+```javascript
+    array.Count(x => x.value >= 40) // 1
+    array.Count()                   // 3
 ``` 
-
-- For
-```
-array.For((obj, index) => { console.log(obj) });
-array.For((obj, index) => { console.log(obj) }, 2(start index));
+### Max (expression)
+```javascript
+    array.Max(x => x.value) // { id: 3, name: 'Test 3', value: 40 }
 ``` 
-
-- Max
-```
-array.Max(x => x.value) --> { id: 3, name: 'Test 3', value: 40 }
-``` 
-
-- Remove 
-```
-array.Remove(x => x.value > 30)
-``` 
-
-- Select == [].map
-```
-array.Select(x => x.value)                       --> [ 20, 30, 40 ]
-array.Select(x => a = { f: x.value, g: x.name }) --> [{ f: 20, g: 'Test 1' },{ f: 30, g: 'Test 2' },{ f: 40, g: 'Test 3' }]
-``` 
-- Where 
-```
-array.Where(x => x.value > 30) --> [{ id: 3, name: 'Test 3', value: 40 }]
+### Sum (expression)
+```javascript
+    array.Sum(x => x.value) // 90
 ```
 
-- Sum
-```
-array.Sum(x => x.value) --> 90
-```
-- Take
-```
-array.Take(2) --> [{ id: 1, name: 'Test 1', value: 20 },{ id: 2, name: 'Test 2', value: 30 }]
-```
+---------------------------------------
 
-- Skip
-```
-array.Skip(1) --> [{ id: 2, name: 'Test 2', value: 30 },{ id: 3, name: 'Test 3', value: 40 }]
-```
-
-- Single
-```
-array.Single(x => x.name, y => y.value > 20) --> 'Test 2'
-```
+## ORDER
 
 - Order
 - OrderBy
@@ -183,6 +215,7 @@ array.Single(x => x.name, y => y.value > 20) --> 'Test 2'
 - OrderByDesc 
  - ThenBy
  - ThenByDesc
-- GroupBy
-- Distinct
+
+---------------------------------------
+
 
