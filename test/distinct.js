@@ -4,7 +4,6 @@ let assert = require('assert');
 
 function checkDistinctValues(fake, expectedLength){
     let distinct = fake.Distinct();
-    console.log(distinct)
     for(let i = 0; i < distinct.length; i++){
         for(let j = i + 1; j < distinct.length; j++){
             if(distinct[i] === distinct[j])
