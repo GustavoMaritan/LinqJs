@@ -32,7 +32,7 @@ Check the operation list below.
 
 * [First](#first-expression)
 * [Last](#last-expression)
-* [Single](#where-attribute-expression)
+* [Single](#single-attribute-expression)
 * [Select](#select-expression)
 * [Where](#where-expression)
 * [Take](#take-amount)
