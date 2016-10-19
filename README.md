@@ -16,11 +16,13 @@
 require('devbox-linq');
 ```
 
-#### Only works on v6 and above ####
+### Only works on v6 and above ####
 
 Check the operation list below.
 
-* [AddRange](#add-range)
+---------------------------------------
+
+* [AddRange](#addrange-list-expression)
 
 - All
 - Any 
