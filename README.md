@@ -223,14 +223,15 @@ let array = [
 
 ## LOOP
 
-### For (callback, startIndex)
+### For (startIndex, callback)
+*startIndex optional* 
 ```javascript
     array.For((obj, index) => { console.log(obj) });
     // { id: 1, name: 'Test 1', value: 20 }
     // { id: 2, name: 'Test 2', value: 30 }
     // { id: 3, name: 'Test 3', value: 40 }
 
-    array.For((obj, index) => { console.log(obj) }, 2);
+    array.For(2, (obj, index) => { console.log(obj) });
     // { id: 3, name: 'Test 3', value: 40 }
 ``` 
 
