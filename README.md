@@ -47,7 +47,7 @@ Check the operation list below.
 
 ### LOOP
 
-* [For](#for-callback-startindex)
+* [For](#for-startindex-callback)
 
 ### AGGREGATION
 
