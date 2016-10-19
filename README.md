@@ -22,13 +22,13 @@ Check the operation list below.
 
 ---------------------------------------
 
-### *BOOLEAN*
+### BOOLEAN
 
 * [All](#all-expression)
 * [Any](#any-expression)
 * [Exist](#exist-expression)
 
-### OBJECT RETURN
+### RETURN OBJECT
 
 * [First](#first-expression)
 * [Last](#last-expression)
@@ -116,7 +116,7 @@ let array = [
 
 ---------------------------------------
 
-## OBJECT RETURN
+## RETURN OBJECT
 
 ### First (expression)
 ```javascript
