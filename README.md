@@ -47,7 +47,7 @@ Check the operation list below.
 
 ### LOOP
 
-* [For](#for-callback-starts-index)
+* [For](#for-callback-startindex)
 
 ### AGGREGATION
 
@@ -94,19 +94,24 @@ let array = [
 
 ### All (expression)
 ```javascript
-    array.All(x => x.value >= 40);  // false
+    array.All(x => x.value >= 40);  
+    // false
 ``` 
 
 ### Any (expression)
 ```javascript
-    array.Any(x => x.value >= 40);   // true
-    array.Any(x => x.value > 40);    // false
-    array.Any();                     // true
+    array.Any(x => x.value >= 40);   
+    // true
+    array.Any(x => x.value > 40);    
+    // false
+    array.Any();                     
+    // true
 ``` 
 
 ### Exist (expression)
 ```javascript
-    array.Exist(x => x.name == 'Test 2'); // true
+    array.Exist(x => x.name == 'Test 2'); 
+    // true
 ``` 
 
 ---------------------------------------
@@ -115,48 +120,71 @@ let array = [
 
 ### First (expression)
 ```javascript
-    array.First();                   // { id: 1, name: 'Test 1', value: 20 }
-    array.First(x => x.value > 10);  // { id: 1, name: 'Test 1', value: 20 }
-    array.First(x => x.value > 40);  // {}
-
+    array.First();                   
+    // { id: 1, name: 'Test 1', value: 20 }
+    array.First(x => x.value > 10);  
+    // { id: 1, name: 'Test 1', value: 20 }
+    array.First(x => x.value > 40);  
+    // null
 ``` 
 
 ### Last (expression)
 ```javascript
-    array.Last();                    // { id: 3, name: 'Test 3', value: 40 }
-    array.Last(x => x.value > 10);   // { id: 3, name: 'Test 3', value: 40 }
-    array.Last(x => x.value > 40);   // {}
+    array.Last();                    
+    // { id: 3, name: 'Test 3', value: 40 }
+    array.Last(x => x.value > 10);   
+    // { id: 3, name: 'Test 3', value: 40 }
+    array.Last(x => x.value > 40);   
+    // null
 
 ``` 
 
-### Single (attribute,expression)
+### Single (attribute, expression)
 ```javascript
-    array.Single(x => x.name, y => y.value > 20); // 'Test 2'
+    array.Single(x => x.name, y => y.value > 20); 
+    // 'Test 2'
 ```
 
 ### Select (expression)
 ```javascript
-    array.Select(x => x.value);                       // [ 20, 30, 40 ]
-    array.Select(x => a = { f: x.value, g: x.name }); // [{ f: 20, g: 'Test 1' },{ f: 30, g: 'Test 2' },{ f: 40, g: 'Test 3' }]
+    array.Select(x => x.value);                       
+    // [ 20, 30, 40 ]
+    array.Select(x => a = { f: x.value, g: x.name }); 
+    // [
+    //  { f: 20, g: 'Test 1' },
+    //  { f: 30, g: 'Test 2' },
+    //  { f: 40, g: 'Test 3' }
+    // ]
 ``` 
 
 ### Where (expression)
 ```javascript
-    array.Where(x => x.value > 30); // [{ id: 3, name: 'Test 3', value: 40 }]
+    array.Where(x => x.value > 30); 
+    // [
+    //  { id: 3, name: 'Test 3', value: 40 }
+    // ]
 ```
 
 ### Take (amount)
 ```javascript
-    array.Take(2); // [{ id: 1, name: 'Test 1', value: 20 },{ id: 2, name: 'Test 2', value: 30 }]
+    array.Take(2); 
+    // [
+    //  { id: 1, name: 'Test 1', value: 20 },
+    //  { id: 2, name: 'Test 2', value: 30 }
+    // ]
 ```
 
 ### Skip (start)
 ```javascript
-    array.Skip(1); // [{ id: 2, name: 'Test 2', value: 30 },{ id: 3, name: 'Test 3', value: 40 }]
+    array.Skip(1); 
+    // [
+    //  { id: 2, name: 'Test 2', value: 30 },
+    //  { id: 3, name: 'Test 3', value: 40 }
+    // ]
 ```
 
---Distinct
---GroupBy
+- Distinct
+- GroupBy
 
 ---------------------------------------
 
@@ -167,23 +195,43 @@ let array = [
     let newArray = [],
         newArray2 = [];
 
-    newArray.AddRange(array)
+    newArray.AddRange(array);
+    // [
+    //  { id: 1, name: 'Test 1', value: 20 },
+    //  { id: 2, name: 'Test 2', value: 30 },
+    //  { id: 3, name: 'Test 3', value: 40 }
+    // ]
     newArray2.AddRange(array, x => x.value > 20)
+    // [
+    //  { id: 2, name: 'Test 2', value: 30 },
+    //  { id: 3, name: 'Test 3', value: 40 }
+    // ]
+    
 ```
 
 ### Remove (expression)
 ```javascript
     array.Remove(x => x.value > 30)
+    // [
+    //  { id: 1, name: 'Test 1', value: 20 },
+    //  { id: 2, name: 'Test 2', value: 30 }
+    // ]
+    
 ``` 
 
 ---------------------------------------
 
 ## LOOP
 
-### For (callback,startIndex)
+### For (callback, startIndex)
 ```javascript
     array.For((obj, index) => { console.log(obj) });
+    // { id: 1, name: 'Test 1', value: 20 }
+    // { id: 2, name: 'Test 2', value: 30 }
+    // { id: 3, name: 'Test 3', value: 40 }
+
     array.For((obj, index) => { console.log(obj) }, 2);
+    // { id: 3, name: 'Test 3', value: 40 }
 ``` 
 
 ---------------------------------------
@@ -197,7 +245,7 @@ let array = [
 ``` 
 ### Max (expression)
 ```javascript
-    array.Max(x => x.value) // { id: 3, name: 'Test 3', value: 40 }
+    array.Max(x => x.value) // 40
 ``` 
 ### Sum (expression)
 ```javascript
