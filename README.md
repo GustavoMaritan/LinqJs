@@ -22,12 +22,15 @@ Check the operation list below.
 
 ---------------------------------------
 
-* [AddRange](#addrange-list-expression)
+### BOOLEAN
+
 * [All](#all-expression)
 * [Any](#any-expression)
+* [Exist](#exist-expression)
+
+* [AddRange](#addrange-list-expression)
 
 - Count
-- Exist
 - First
 - Last
 - For
@@ -74,12 +77,7 @@ let array = [
 
 ```
 
-### AddRange (list, [expression])
-
-```javascript
-    newArray.AddRange(array)
-    newArray2.AddRange(array, x => x.value > 20)
-```
+## BOOLEAN
 
 ### All (expression)
 ```javascript
@@ -93,16 +91,27 @@ array.Any(x => x.value > 40)    // false
 array.Any()                     // true
 ``` 
 
+### Exist ([expression])
+```javascript
+array.Exist(x => x.name == 'Test 2') // true
+``` 
+
+---------------------------------------
+
+### AddRange (list, [expression])
+
+```javascript
+    newArray.AddRange(array)
+    newArray2.AddRange(array, x => x.value > 20)
+```
+
 - Count
 ```
 array.Count(x => x.value >= 40) --> 1
 array.Count()                   --> 3
 ``` 
 
-- Exist
-```
-array.Exist(x => x.name == 'Test 2') --> true
-``` 
+
 
 - First
 - FirstOrDefault 
