@@ -22,7 +22,7 @@ Check the operation list below.
 
 ---------------------------------------
 
-### BOOLEAN
+### *BOOLEAN*
 
 * [All](#all-expression)
 * [Any](#any-expression)
