@@ -24,9 +24,8 @@ Check the operation list below.
 
 * [AddRange](#addrange-list-expression)
 * [All](#all-expression)
+* [Any](#any-expression)
 
-- All
-- Any 
 - Count
 - Exist
 - First
@@ -75,23 +74,23 @@ let array = [
 
 ```
 
-### AddRange (list, expression)
+### AddRange (list, [expression])
 
 ```javascript
-newArray.AddRange(array)
-newArray2.AddRange(array, x => x.value > 20)
+    newArray.AddRange(array)
+    newArray2.AddRange(array, x => x.value > 20)
 ```
 
 ### All (expression)
-```
-array.All(x => x.value >= 40)   --> false
+```javascript
+    array.All(x => x.value >= 40);  // false
 ``` 
 
-- Any 
-```
-array.Any(x => x.value >= 40)   --> true
-array.Any(x => x.value > 40)    --> false
-array.Any()                     --> true
+### Any ([expression])
+```javascript
+array.Any(x => x.value >= 40)   // true
+array.Any(x => x.value > 40)    // false
+array.Any()                     // true
 ``` 
 
 - Count
