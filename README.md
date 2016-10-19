@@ -4,7 +4,17 @@
 
 ##DEVBOX-LINQ
 
-Lambda style operations for nodejs.
+    Lambda style operations for nodejs.
+
+## Installation
+
+    npm install devbox-linq
+
+## Use Example
+
+```javascript
+require('devbox-linq');
+```
 
 #### Only works on v6 and above ####
 
@@ -32,7 +42,7 @@ let array = [
 
 ```
 
-* [AddRange](https://github.com/GustavoMaritan/LinqJs#add-range)
+* [Range](#addrange)
 
 - All
 - Any 
@@ -62,7 +72,7 @@ let array = [
 
 ---------------------------------------
 
-### AddRange (list, expression)
+### Range (list, expression)
 
 ```javascript
 newArray.AddRange(array)
