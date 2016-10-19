@@ -23,6 +23,7 @@ Check the operation list below.
 ---------------------------------------
 
 * [AddRange](#addrange-list-expression)
+* [All](#all-expression)
 
 - All
 - Any 
@@ -81,7 +82,7 @@ newArray.AddRange(array)
 newArray2.AddRange(array, x => x.value > 20)
 ```
 
-- All
+### All (expression)
 ```
 array.All(x => x.value >= 40)   --> false
 ``` 
