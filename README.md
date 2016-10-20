@@ -26,7 +26,6 @@ Check the operation list below.
 
 * [All](#all-expression)
 * [Any](#any-expression)
-* [Exist](#exist-expression)
 
 ### RETURN OBJECT
 
@@ -39,6 +38,7 @@ Check the operation list below.
 * [Skip](#skip-start)
 * [Distinct](#distinct-expression)
 * [GroupBy](#groupby-expression)
+* [Union](#union-expression)
 
 ### ARRAY
 
@@ -105,12 +105,6 @@ let array = [
     array.Any(x => x.value > 40);    
     // false
     array.Any();                     
-    // true
-``` 
-
-### Exist (expression)
-```javascript
-    array.Exist(x => x.name == 'Test 2'); 
     // true
 ``` 
 
@@ -185,7 +179,7 @@ let array = [
 
 - Distinct
 - GroupBy
-
+- Union
 ---------------------------------------
 
 ### ARRAY
