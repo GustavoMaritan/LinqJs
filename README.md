@@ -233,7 +233,7 @@ let array2 = [
 
 ### Distinct
 
-#### Example Distinct
+#### Example
 ```javascript
 
     let array2 = [
@@ -244,7 +244,10 @@ let array2 = [
         { id: 4, name: 'Test 2', value: 20 },
         { id: 4, name: 'Test 2', value: 20 },
     ];
+```
 
+*Distinct*
+```javascript
     array2.Distinct();
   //[ { id: 1, name: 'Test 1', value: 20 },
   //  { id: 1, name: 'Test 1', value: 30 },
