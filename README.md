@@ -41,8 +41,7 @@ Check the operation list below.
 * [Where](#where-expression)
 * [Take](#take-amount)
 * [Skip](#skip-start)
-* [Union](#union-array-expression)
-* [UnionAll](#unionall-array-expression)
+* [Union/UnionAll](#unionunionall-array-expression)
 
 ### DISTINCT
 
