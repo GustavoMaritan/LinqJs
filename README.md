@@ -46,7 +46,7 @@ Check the operation list below.
 
 ### DISTINCT
 
-* [Distinct](#distinct)
+* [Distinct](#distinct-1)
 
 ### GROUP
 
