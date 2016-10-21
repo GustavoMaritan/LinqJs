@@ -181,7 +181,11 @@ let array = [
     // ]
 ```
 
-#### Example Union
+
+
+### Union/UnionAll (array, expression)
+
+#### Example Union/UnionAll
 ```javascript
 
 let array2 = [
@@ -192,8 +196,7 @@ let array2 = [
 ];
 
 ```
-
-### Union (array, expression)
+*Union* 
 ```javascript
     array.Union(array2);
   //[ { id: 1, name: 'Test 1', value: 20 },
@@ -211,8 +214,7 @@ let array2 = [
   //  { id: 4, name: 'Test 4', value: 40 } ]
 ```
 
-### UnionAll (array, expression)
-    *union distinct* 
+*UnionAll -> distinct* 
 ```javascript
     array.UnionAll(array2);
   //[ { id: 3, name: 'Test 3', value: 40 },
@@ -226,6 +228,7 @@ let array2 = [
   //  { id: 3, name: 'Test 6', value: 40 },
   //  { id: 4, name: 'Test 4', value: 40 } ]
 ```
+---------------------------------------
 
 ### DISTINCT
 
