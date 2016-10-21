@@ -16,6 +16,8 @@
 require('devbox-linq');
 ```
 
+#### Version >= 3.0.0
+
 ### Only works on v6 and above ####
 
 Check the operation list below.
@@ -32,13 +34,23 @@ Check the operation list below.
 * [First](#first-expression)
 * [Last](#last-expression)
 * [Single](#single-attribute-expression)
+
+### RETURN ARRAY
+
 * [Select](#select-expression)
 * [Where](#where-expression)
 * [Take](#take-amount)
 * [Skip](#skip-start)
-* [Distinct](#distinct-expression)
+* [Union](#union-array-expression)
+* [UnionAll](#unionall-array-expression)
+
+### DISTINCT
+
+* [Distinct](#distinct)
+
+### GROUP
+
 * [GroupBy](#groupby-expression)
-* [Union](#union-expression)
 
 ### ARRAY
 
@@ -71,21 +83,9 @@ Check the operation list below.
 ```javascript
 
 let array = [
-    {
-        id: 1,
-        name: 'Test 1',
-        value: 20
-    },
-    {
-        id: 2,
-        name: 'Test 2',
-        value: 30
-    },
-    {
-        id: 3,
-        name: 'Test 3',
-        value: 40
-    },
+    { id: 1, name: 'Test 1', value: 20 },
+    { id: 2, name: 'Test 2', value: 30 },
+    { id: 3, name: 'Test 3', value: 40 },
 ];
 
 ```
@@ -139,6 +139,10 @@ let array = [
     // 'Test 2'
 ```
 
+---------------------------------------
+
+## RETURN ARRAY
+
 ### Select (expression)
 ```javascript
     array.Select(x => x.value);                       
@@ -177,9 +181,84 @@ let array = [
     // ]
 ```
 
-- Distinct
+#### Example Union
+```javascript
+
+let array2 = [
+    { id: 1, name: 'Test 1', value: 20 },
+    { id: 2, name: 'Test 2', value: 30 },
+    { id: 3, name: 'Test 6', value: 40 },
+    { id: 4, name: 'Test 4', value: 40 },
+];
+
+```
+
+### Union (array, expression)
+```javascript
+    array.Union(array2);
+  //[ { id: 1, name: 'Test 1', value: 20 },
+  //  { id: 2, name: 'Test 2', value: 30 },
+  //  { id: 3, name: 'Test 3', value: 40 },
+  //  { id: 1, name: 'Test 1', value: 20 },
+  //  { id: 2, name: 'Test 2', value: 30 },
+  //  { id: 3, name: 'Test 6', value: 40 },
+  //  { id: 4, name: 'Test 4', value: 40 } ]
+    array.Union(array2, x => x.value > 20);
+  //[ { id: 2, name: 'Test 2', value: 30 },
+  //  { id: 3, name: 'Test 3', value: 40 },
+  //  { id: 2, name: 'Test 2', value: 30 },
+  //  { id: 3, name: 'Test 6', value: 40 },
+  //  { id: 4, name: 'Test 4', value: 40 } ]
+```
+
+### UnionAll (array, expression)
+    *union distinct* 
+```javascript
+    array.UnionAll(array2);
+  //[ { id: 3, name: 'Test 3', value: 40 },
+  //  { id: 1, name: 'Test 1', value: 20 },
+  //  { id: 2, name: 'Test 2', value: 30 },
+  //  { id: 3, name: 'Test 6', value: 40 },
+  //  { id: 4, name: 'Test 4', value: 40 } ]
+    array.UnionAll(array2, x => x.value > 20);
+  //[ { id: 3, name: 'Test 3', value: 40 },
+  //  { id: 2, name: 'Test 2', value: 30 },
+  //  { id: 3, name: 'Test 6', value: 40 },
+  //  { id: 4, name: 'Test 4', value: 40 } ]
+```
+
+### DISTINCT
+
+#### Example Distinct
+```javascript
+
+let array2 = [
+    { id: 1, name: 'Test 1', value: 20 },
+    { id: 1, name: 'Test 1', value: 20 },
+    { id: 1, name: 'Test 1', value: 30 },
+    { id: 4, name: 'Test 1', value: 20 },
+    { id: 4, name: 'Test 2', value: 20 },
+    { id: 4, name: 'Test 2', value: 20 },
+];
+
+```
+
+### Distinct
+```javascript
+    array2.Distinct();
+  //[ { id: 1, name: 'Test 1', value: 20 },
+  //  { id: 1, name: 'Test 1', value: 30 },
+  //  { id: 4, name: 'Test 1', value: 20 },
+  //  { id: 4, name: 'Test 2', value: 20 } ]
+    
+```
+
+---------------------------------------
+
+### GROUP
+
 - GroupBy
-- Union
+
 ---------------------------------------
 
 ### ARRAY
