@@ -69,8 +69,8 @@ Check the operation list below.
 ### ORDER
 
 * [Order](#order)
-* [OrderBy/OrderByDesc](#orderByorderByDesc-expression)
-    *OrderBy/OrderByDesc --> ThenBy/ThenByDesc*
+* [OrderBy/OrderByDesc](#orderbyorderbydesc-expression)
+
 ---------------------------------------
 
 ### Example
@@ -329,7 +329,6 @@ let array2 = [
 ## ORDER
 
 ### Order
-[5,6,1,7].Order()
 ```javascript
     [5,6,1,7].Order();
     // [1,5,6,7]
