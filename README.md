@@ -68,14 +68,9 @@ Check the operation list below.
 
 ### ORDER
 
-- Order
-- OrderBy
- - ThenBy
- - ThenByDesc
-- OrderByDesc 
- - ThenBy
- - ThenByDesc
-
+* [Order](#order)
+* [OrderBy/OrderByDesc](#orderByorderByDesc-expression)
+    *OrderBy/OrderByDesc --> ThenBy/ThenByDesc*
 ---------------------------------------
 
 ### Example
@@ -333,14 +328,95 @@ let array2 = [
 
 ## ORDER
 
-- Order
-- OrderBy
- - ThenBy
- - ThenByDesc
-- OrderByDesc 
- - ThenBy
- - ThenByDesc
+### Order
+[5,6,1,7].Order()
+```javascript
+    [5,6,1,7].Order();
+    // [1,5,6,7]
+    
+```
+
+### OrderBy/OrderByDesc (expression)
+
+##### Example
+```javascript
+
+    let array = [
+        { id: 3, name: 'Test 3', value: 40 },
+        { id: 1, name: 'Test 2', value: 30 },
+        { id: 1, name: 'Test 2', value: 20 },
+        { id: 1, name: 'Test 1', value: 20 },
+        { id: 2, name: 'Test 2', value: 30 },
+    ];
+```
+
+*OrderBy/OrderByDesc*
+```javascript
+    array.OrderBy(x => x.id).ToList();
+    /*
+        [ 
+            { id: 1, name: 'Test 2', value: 30 },
+            { id: 1, name: 'Test 2', value: 20 },
+            { id: 1, name: 'Test 1', value: 20 },
+            { id: 2, name: 'Test 2', value: 30 },
+            { id: 3, name: 'Test 3', value: 40 } 
+        ]
+    */
+    array.OrderByDesc(x => x.id).ToList();
+    /*
+        [ 
+            { id: 3, name: 'Test 3', value: 40 },
+            { id: 2, name: 'Test 2', value: 30 },
+            { id: 1, name: 'Test 2', value: 30 },
+            { id: 1, name: 'Test 1', value: 20 },
+            { id: 1, name: 'Test 2', value: 20 } 
+        ]
+    */
+```
+
+*OrderBy.ThenBy*
+```javascript
+    array.OrderBy(x => x.id).ThenBy(x => x.name).ToList()
+    /*
+        [ 
+            { id: 1, name: 'Test 1', value: 20 },
+            { id: 1, name: 'Test 2', value: 30 },
+            { id: 1, name: 'Test 2', value: 20 },
+            { id: 2, name: 'Test 2', value: 30 },
+            { id: 3, name: 'Test 3', value: 40 } 
+        ]
+    */
+
+    array.OrderBy(x => x.id)
+         .ThenBy(x => x.name)
+         .ThenBy(x => x.value).ToList()
+    /*
+        [ 
+            { id: 1, name: 'Test 1', value: 20 },
+            { id: 1, name: 'Test 2', value: 20 },
+            { id: 1, name: 'Test 2', value: 30 },
+            { id: 2, name: 'Test 2', value: 30 },
+            { id: 3, name: 'Test 3', value: 40 } 
+        ]
+    */
+
+    array.OrderBy(x => x.id)
+         .ThenBy(x => x.name)
+         .ThenByDesc(x => x.value).ToList()
+    /*
+        [ 
+            { id: 1, name: 'Test 1', value: 20 },
+            { id: 1, name: 'Test 2', value: 30 },
+            { id: 1, name: 'Test 2', value: 20 },
+            { id: 2, name: 'Test 2', value: 30 },
+            { id: 3, name: 'Test 3', value: 40 } 
+        ]
+    */
+```
+
 
 ---------------------------------------
+
+
 
 
