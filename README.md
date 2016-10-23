@@ -68,7 +68,7 @@ Check the operation list below.
 
 ### ORDER
 
-* [Order](#order)
+* [Order](#order-2)
 * [OrderBy/OrderByDesc](#orderbyorderbydesc-expression)
 
 ---------------------------------------
@@ -373,7 +373,7 @@ let array2 = [
     */
 ```
 
-*OrderBy.ThenBy*
+*OrderBy.ThenBy/ThenByDesc*
 ```javascript
     array.OrderBy(x => x.id).ThenBy(x => x.name).ToList()
     /*
