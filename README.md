@@ -373,7 +373,7 @@ let array2 = [
     */
 ```
 
-*OrderBy.ThenBy/ThenByDesc*
+*(OrderBy/OrderByDesc).(ThenBy/ThenByDesc)*
 ```javascript
     array.OrderBy(x => x.id).ThenBy(x => x.name).ToList()
     /*
