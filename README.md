@@ -305,7 +305,6 @@ let array2 = [
     array.For(2, (obj, index) => { console.log(obj) });
     // { id: 3, name: 'Test 3', value: 40 }
 ``` 
-
 ---------------------------------------
 
 ## AGGREGATION
