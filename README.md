@@ -25,7 +25,7 @@ Check the operation list below.
 ---------------------------------------
 
 ### BOOLEAN
-* [Add](#add)
+* [Add](#add-...itens)
 * [All](#all-expression)
 * [Any](#any-expression)
 
@@ -106,7 +106,7 @@ let array = [
 
 ## RETURN OBJECT
 
-### add 
+### add(...itens)
 
 ### First (expression)
 ```javascript
