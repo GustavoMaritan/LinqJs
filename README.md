@@ -25,7 +25,7 @@ Check the operation list below.
 ---------------------------------------
 
 ### BOOLEAN
-* [Add](#add-...itens)
+* [Add](#add-'...itens')
 * [All](#all-expression)
 * [Any](#any-expression)
 
