@@ -106,7 +106,7 @@ let array = [
 
 ## RETURN OBJECT
 
-### Add 
+### add 
 
 ### First (expression)
 ```javascript
