@@ -1,420 +1,584 @@
-
 [![Build Status](https://travis-ci.org/rafael-pinho/LinqJs.svg?branch=master)](https://travis-ci.org/rafael-pinho/module-proxy)
 [![bitHound Overall Score](https://www.bithound.io/github/GustavoMaritan/LinqJs/badges/score.svg)](https://www.bithound.io/github/GustavoMaritan/LinqJs)
 
-##DEVBOX-LINQ
-
-    Lambda style operations for nodejs.
+# DEVBOX-LINQ
+Lambda operations for js inspired by C# :)
 
 ## Installation
+```shell
+npm install devbox-linq
+```
 
-    npm install devbox-linq
-
-## Use Example
-
-```javascript
+## Usage (Node.js)
+```js
 require('devbox-linq');
 ```
+> only works on v6 and above
 
-#### Version >= 3.0.0
+## Documentation
+* [add](#additem)
+* [addRange](#addrangearray)
+* [all](#allcondition)
+* [any](#anycondition)
+* [asyncFor](#asyncforcallback)
+* [count](#countcondition)
+* [distinct](#distinct)
+* [distinctRecursive](#distinctrecursive)
+* [first](#firstcondition)
+* [firstOrDefault](#firstordefaultcondition)
+* [groupBy](#groupbyexpression)
+* [last](#lastcondition)
+* [lastOrDefault](#lastordefaultcondition)
+* [max](#maxexpression)
+* [min](#minexpression)
+* [order](#order)
+* [orderBy](#orderbyexpression)
+* [orderByDesc](#orderbydescexpression)
+* [orderDesc](#orderdesc)
+* [remove](#removecondition)
+* [removeAt](#removeatindex)
+* [select](#selectexpression)
+* [selectMany](#selectmanyexpression)
+* [skip](#skiplength)
+* [sum](#sumexpression)
+* [take](#takelength)
+* [thenBy](#thenbyexpression)
+* [thenByDesc](#thenbydescexpression)
+* [where](#whereexpression)
 
-### Only works on v6 and above ####
+### add(item)
+Add a item into a existing array.
+```js
+let array = [{ id: 1, name: 'Goku' }];
 
-Check the operation list below.
+array.add({ id: 2, name: 'Vegeta' }); // Same as .push(), it's only semanthic
 
----------------------------------------
+console.log(array);
+/*
+OUTPUT:
+[
+    { id: 1, name: 'Goku' },
+    { id: 2, name: 'Vegeta' }
+]
+*/
+```
 
-### BOOLEAN
-
-* [All](#all-expression)
-* [Any](#any-expression)
-
-### RETURN OBJECT
-
-* [First](#first-expression)
-* [Last](#last-expression)
-* [Single](#single-attribute-expression)
-
-### RETURN ARRAY
-
-* [Select](#select-expression)
-* [Where](#where-expression)
-* [Take](#take-amount)
-* [Skip](#skip-start)
-* [Union/UnionAll](#unionunionall-array-expression)
-
-### DISTINCT
-
-* [Distinct](#distinct-1)
-
-### GROUP
-
-* [GroupBy](#groupby-expression)
-
-### ARRAY
-
-* [AddRange](#addrange-list-expression)
-* [Remove](#remove-expression)
-
-### LOOP
-
-* [For](#for-startindex-callback)
-
-### AGGREGATION
-
-* [Count](#count-expression)
-* [Max](#max-expression)
-* [Sum](#sum-expression)
-
-### ORDER
-
-* [Order](#order-2)
-* [OrderBy/OrderByDesc](#orderbyorderbydesc-expression)
-
----------------------------------------
-
-### Example
-```javascript
-
-let array = [
-    { id: 1, name: 'Test 1', value: 20 },
-    { id: 2, name: 'Test 2', value: 30 },
-    { id: 3, name: 'Test 3', value: 40 },
+### addRange(...array)
+Add a list of items into a existing array.
+```js
+//Way 1
+let array1 = [
+    { id: 1, name: 'Goku' },
+    { id: 2, name: 'Vegeta' }
 ];
-
-```
-
-## BOOLEAN
-
-### All (expression)
-```javascript
-    array.All(x => x.value >= 40);  
-    // false
-``` 
-
-### Any (expression)
-```javascript
-    array.Any(x => x.value >= 40);   
-    // true
-    array.Any(x => x.value > 40);    
-    // false
-    array.Any();                     
-    // true
-``` 
-
----------------------------------------
-
-## RETURN OBJECT
-
-### First (expression)
-```javascript
-    array.First();                   
-    // { id: 1, name: 'Test 1', value: 20 }
-    array.First(x => x.value > 10);  
-    // { id: 1, name: 'Test 1', value: 20 }
-    array.First(x => x.value > 40);  
-    // null
-``` 
-
-### Last (expression)
-```javascript
-    array.Last();                    
-    // { id: 3, name: 'Test 3', value: 40 }
-    array.Last(x => x.value > 10);   
-    // { id: 3, name: 'Test 3', value: 40 }
-    array.Last(x => x.value > 40);   
-    // null
-
-``` 
-
-### Single (attribute, expression)
-```javascript
-    array.Single(x => x.name, y => y.value > 20); 
-    // 'Test 2'
-```
-
----------------------------------------
-
-## RETURN ARRAY
-
-### Select (expression)
-```javascript
-    array.Select(x => x.value);                       
-    // [ 20, 30, 40 ]
-    array.Select(x => a = { f: x.value, g: x.name }); 
-    // [
-    //  { f: 20, g: 'Test 1' },
-    //  { f: 30, g: 'Test 2' },
-    //  { f: 40, g: 'Test 3' }
-    // ]
-``` 
-
-### Where (expression)
-```javascript
-    array.Where(x => x.value > 30); 
-    // [
-    //  { id: 3, name: 'Test 3', value: 40 }
-    // ]
-```
-
-### Take (amount)
-```javascript
-    array.Take(2); 
-    // [
-    //  { id: 1, name: 'Test 1', value: 20 },
-    //  { id: 2, name: 'Test 2', value: 30 }
-    // ]
-```
-
-### Skip (start)
-```javascript
-    array.Skip(1); 
-    // [
-    //  { id: 2, name: 'Test 2', value: 30 },
-    //  { id: 3, name: 'Test 3', value: 40 }
-    // ]
-```
-
-
-
-### Union/UnionAll (array, expression)
-
-#### Example
-```javascript
-
 let array2 = [
-    { id: 1, name: 'Test 1', value: 20 },
-    { id: 2, name: 'Test 2', value: 30 },
-    { id: 3, name: 'Test 6', value: 40 },
-    { id: 4, name: 'Test 4', value: 40 },
+    { id: 3, name: 'Bulma' },
+    { id: 4, name: 'Gohan' }
 ];
 
+array1.addRange(array2);
+
+console.log(array1);
+/*
+OUTPUT:
+[
+    { id: 1, name: 'Goku' },
+    { id: 2, name: 'Vegeta' },
+    { id: 3, name: 'Bulma' },
+    { id: 4, name: 'Gohan' }
+]
+*/
 ```
-*Union* 
-```javascript
-    array.Union(array2);
-  //[ { id: 1, name: 'Test 1', value: 20 },
-  //  { id: 2, name: 'Test 2', value: 30 },
-  //  { id: 3, name: 'Test 3', value: 40 },
-  //  { id: 1, name: 'Test 1', value: 20 },
-  //  { id: 2, name: 'Test 2', value: 30 },
-  //  { id: 3, name: 'Test 6', value: 40 },
-  //  { id: 4, name: 'Test 4', value: 40 } ]
-    array.Union(array2, x => x.value > 20);
-  //[ { id: 2, name: 'Test 2', value: 30 },
-  //  { id: 3, name: 'Test 3', value: 40 },
-  //  { id: 2, name: 'Test 2', value: 30 },
-  //  { id: 3, name: 'Test 6', value: 40 },
-  //  { id: 4, name: 'Test 4', value: 40 } ]
-```
+```js
+//Way 2
+let array = [
+    { id: 1, name: 'Goku' },
+    { id: 2, name: 'Vegeta' }
+];
 
-*UnionAll -> distinct* 
-```javascript
-    array.UnionAll(array2);
-  //[ { id: 3, name: 'Test 3', value: 40 },
-  //  { id: 1, name: 'Test 1', value: 20 },
-  //  { id: 2, name: 'Test 2', value: 30 },
-  //  { id: 3, name: 'Test 6', value: 40 },
-  //  { id: 4, name: 'Test 4', value: 40 } ]
-    array.UnionAll(array2, x => x.value > 20);
-  //[ { id: 3, name: 'Test 3', value: 40 },
-  //  { id: 2, name: 'Test 2', value: 30 },
-  //  { id: 3, name: 'Test 6', value: 40 },
-  //  { id: 4, name: 'Test 4', value: 40 } ]
-```
----------------------------------------
+array.addRange({ id: 3, name: 'Bulma' }, { id: 4, name: 'Gohan' });
 
-## DISTINCT
-
-### Distinct
-
-#### Example
-```javascript
-
-    let array2 = [
-        { id: 1, name: 'Test 1', value: 20 },
-        { id: 1, name: 'Test 1', value: 20 },
-        { id: 1, name: 'Test 1', value: 30 },
-        { id: 4, name: 'Test 1', value: 20 },
-        { id: 4, name: 'Test 2', value: 20 },
-        { id: 4, name: 'Test 2', value: 20 },
-    ];
+console.log(array);
+/*
+OUTPUT:
+[
+    { id: 1, name: 'Goku' },
+    { id: 2, name: 'Vegeta' },
+    { id: 3, name: 'Bulma' },
+    { id: 4, name: 'Gohan' }
+]
+*/
 ```
 
-*Distinct*
-```javascript
-    array2.Distinct();
-  //[ { id: 1, name: 'Test 1', value: 20 },
-  //  { id: 1, name: 'Test 1', value: 30 },
-  //  { id: 4, name: 'Test 1', value: 20 },
-  //  { id: 4, name: 'Test 2', value: 20 } ]
-    
+### all(condition)
+Checks that all items in the list match the condition.
+```js
+let array = [
+    { id: 1, name: 'Goku' },
+    { id: 2, name: 'Vegeta' }
+];
+
+array.all(x => x.id == 1);  // false
+array.all(x => x.id >= 1);  // true
 ```
 
----------------------------------------
+### any(condition?)
+Checks that one item in the list match the condition. If no condition, check if has something in the list.
+```js
+let array = [
+    { id: 1, name: 'Goku' },
+    { id: 2, name: 'Vegeta' }
+];
 
-### GROUP
-
-- GroupBy
-
----------------------------------------
-
-### ARRAY
-
-### AddRange (list, expression)
-```javascript
-    let newArray = [],
-        newArray2 = [];
-
-    newArray.AddRange(array);
-    // [
-    //  { id: 1, name: 'Test 1', value: 20 },
-    //  { id: 2, name: 'Test 2', value: 30 },
-    //  { id: 3, name: 'Test 3', value: 40 }
-    // ]
-    newArray2.AddRange(array, x => x.value > 20)
-    // [
-    //  { id: 2, name: 'Test 2', value: 30 },
-    //  { id: 3, name: 'Test 3', value: 40 }
-    // ]
-    
+array.any(x => x.id == 3); // false
+array.any(x => x.id == 1); // true
+array.any(); // true
 ```
 
-### Remove (expression)
-```javascript
-    array.Remove(x => x.value > 30)
-    // [
-    //  { id: 1, name: 'Test 1', value: 20 },
-    //  { id: 2, name: 'Test 2', value: 30 }
-    // ]
-    
-``` 
-
----------------------------------------
-
-## LOOP
-
-### For (startIndex, callback)
-*startIndex optional* 
-```javascript
-    array.For((obj, index) => { console.log(obj) });
-    // { id: 1, name: 'Test 1', value: 20 }
-    // { id: 2, name: 'Test 2', value: 30 }
-    // { id: 3, name: 'Test 3', value: 40 }
-
-    array.For(2, (obj, index) => { console.log(obj) });
-    // { id: 3, name: 'Test 3', value: 40 }
-``` 
----------------------------------------
-
-## AGGREGATION
-
-### Count (expression)
-```javascript
-    array.Count(x => x.value >= 40) // 1
-    array.Count()                   // 3
-``` 
-### Max (expression)
-```javascript
-    array.Max(x => x.value) // 40
-``` 
-### Sum (expression)
-```javascript
-    array.Sum(x => x.value) // 90
+### asyncFor(callback)
+Iterates asynchronous calls.
+```js
+await array.asyncFor(async () => {
+    await something();
+});
 ```
 
----------------------------------------
-
-## ORDER
-
-### Order
-```javascript
-    [5,6,1,7].Order();
-    // [1,5,6,7]
-    
+### count(condition?)
+Count all items that match the condition. If no condition, returns the list length.
+```js
+let array = [
+    { id: 1, name: 'Goku' },
+    { id: 2, name: 'Vegeta' }
+];
+array.count(x => x.id >= 2); //1
+array.count(); //2
 ```
 
-### OrderBy/OrderByDesc (expression)
+### distinct()
+Distinguishes equal items from the list. If it's complex type, like object and array, it'll be by reference.
+```js
+let array = [
+    { text: 'Object' },
+    { text: 'Object' }
+];
+array.distinct(); // Nothing happens
 
-##### Example
-```javascript
+let obj =  { text: 'Object2' };
+array.add(obj); // Adding one time
+array.add(obj); // Adding two times
+array.distinct();
+console.log(array);
+/*
+OUTPUT:
+[
+    { text: 'Object' },
+    { text: 'Object' },
+    { text: 'Object2' }
+]
+*/
 
-    let array = [
-        { id: 3, name: 'Test 3', value: 40 },
-        { id: 1, name: 'Test 2', value: 30 },
-        { id: 1, name: 'Test 2', value: 20 },
-        { id: 1, name: 'Test 1', value: 20 },
-        { id: 2, name: 'Test 2', value: 30 },
-    ];
+[1, 2, 3, 4, 1, 2].distinct(); // [1, 2, 3, 4]
 ```
 
-*OrderBy/OrderByDesc*
-```javascript
-    array.OrderBy(x => x.id).ToList();
-    /*
-        [ 
-            { id: 1, name: 'Test 2', value: 30 },
-            { id: 1, name: 'Test 2', value: 20 },
-            { id: 1, name: 'Test 1', value: 20 },
-            { id: 2, name: 'Test 2', value: 30 },
-            { id: 3, name: 'Test 3', value: 40 } 
-        ]
-    */
-    array.OrderByDesc(x => x.id).ToList();
-    /*
-        [ 
-            { id: 3, name: 'Test 3', value: 40 },
-            { id: 2, name: 'Test 2', value: 30 },
-            { id: 1, name: 'Test 2', value: 30 },
-            { id: 1, name: 'Test 1', value: 20 },
-            { id: 1, name: 'Test 2', value: 20 } 
-        ]
-    */
+### distinctRecursive()
+Distinguishes equal items from the list. If it's complex type, like object, it'll be done verifying the attributes.
+```js
+let array = [
+    { text: 'Object' },
+    { text: 'Object' }
+];
+array.distinctRecursive(); // [{ text: 'Object' }]
+
+let obj =  { text: 'Object2' };
+array.add(obj); // Adding one time
+array.add(obj); // Adding two times
+array.distinctRecursive();
+console.log(array);
+/*
+OUTPUT:
+[
+    { text: 'Object' },
+    { text: 'Object2' }
+]
+*/
 ```
 
-*(OrderBy/OrderByDesc).(ThenBy/ThenByDesc)*
-```javascript
-    array.OrderBy(x => x.id).ThenBy(x => x.name).ToList()
-    /*
-        [ 
-            { id: 1, name: 'Test 1', value: 20 },
-            { id: 1, name: 'Test 2', value: 30 },
-            { id: 1, name: 'Test 2', value: 20 },
-            { id: 2, name: 'Test 2', value: 30 },
-            { id: 3, name: 'Test 3', value: 40 } 
-        ]
-    */
+### first(condition?)
+Returns the first item that match the condition.
+```js
+let array = [
+    { id: 1, name: 'Goku' },
+    { id: 2, name: 'Vegeta' },
+    { id: 2, name: 'Vegeta2' }
+];
 
-    array.OrderBy(x => x.id)
-         .ThenBy(x => x.name)
-         .ThenBy(x => x.value).ToList()
-    /*
-        [ 
-            { id: 1, name: 'Test 1', value: 20 },
-            { id: 1, name: 'Test 2', value: 20 },
-            { id: 1, name: 'Test 2', value: 30 },
-            { id: 2, name: 'Test 2', value: 30 },
-            { id: 3, name: 'Test 3', value: 40 } 
-        ]
-    */
+array.first(x => x.id == 2); // { id: 2, name: 'Vegeta' }
+array.first(); // { id: 1, name: 'Goku' }
 
-    array.OrderBy(x => x.id)
-         .ThenBy(x => x.name)
-         .ThenByDesc(x => x.value).ToList()
-    /*
-        [ 
-            { id: 1, name: 'Test 1', value: 20 },
-            { id: 1, name: 'Test 2', value: 30 },
-            { id: 1, name: 'Test 2', value: 20 },
-            { id: 2, name: 'Test 2', value: 30 },
-            { id: 3, name: 'Test 3', value: 40 } 
-        ]
-    */
+array.first(x => x.id == 3); // throws exception
+[].first(); // throws exception
 ```
 
+### firstOrDefault(condition?)
+Returns the first item that match the condition, if anyone match, returns undefined instead exception.
+```js
+let array = [
+    { id: 1, name: 'Goku' },
+    { id: 2, name: 'Vegeta' },
+    { id: 2, name: 'Vegeta2' }
+];
 
----------------------------------------
+array.firstOrDefault(x => x.id == 2); // { id: 2, name: 'Vegeta' }
+array.firstOrDefault(); // { id: 1, name: 'Goku' }
 
+array.firstOrDefault(x => x.id == 10); // undefined
+[].firstOrDefault(); // undefined
+```
 
+### groupBy(expression)
+Group the list by a expression.
+```js
+let array = [
+    { id: 1, name: 'Goku', age: 20 },
+    { id: 2, name: 'Vegeta', age: 20 },
+    { id: 3, name: 'Bulma', age: 19 }
+];
 
+let group = array.groupBy(x => x.age);
+console.log(group);
+/*
+OUTPUT:
+[
+    [
+        { id: 1, name: 'Goku', age: 20 },
+        { id: 2, name: 'Vegeta', age: 20 }
+    ],
+    [
+        { id: 3, name: 'Bulma', age: 19 }
+    ]
+]
+*/
 
+console.log(group[0].key); // 20
+console.log(group[1].key); // 19
+```
+
+### last(condition?)
+Returns the last item that match the condition.
+```js
+let array = [
+    { id: 1, name: 'Goku' },
+    { id: 1, name: 'Goku2' },
+    { id: 2, name: 'Vegeta' }
+];
+
+array.last(x => x.id == 1); // { id: 1, name: 'Goku2' }
+array.last(); // { id: 2, name: 'Vegeta' }
+
+array.last(x => x.id == 3); // throws exception
+[].last(); // throws exception
+```
+
+### lastOrDefault(condition?)
+Returns the last item that match the condition, if anyone match, returns undefined instead exception.
+```js
+let array = [
+    { id: 1, name: 'Goku' },
+    { id: 1, name: 'Goku2' },
+    { id: 2, name: 'Vegeta' }
+];
+
+array.lastOrDefault(x => x.id == 1); // { id: 1, name: 'Goku2' }
+array.lastOrDefault(); // { id: 2, name: 'Vegeta' }
+
+array.lastOrDefault(x => x.id == 10); // undefined
+[].lastOrDefault(); // undefined
+```
+
+### max(expression?)
+Returns the largest item that match the expression.
+```js
+let array = [
+    { id: 1, name: 'Goku', age: 22 },
+    { id: 2, name: 'Vegeta', age: 20 }
+];
+
+array.max(x => x.age); // 22
+[1, 5, 3].max(); // 5
+```
+
+### min(expression?)
+Returns the smallest item that match the expression.
+```js
+let array = [
+    { id: 1, name: 'Goku', age: 22 },
+    { id: 2, name: 'Vegeta', age: 20 }
+];
+
+array.min(x => x.age); // 20
+[1, 5, 3].min(); // 1
+```
+
+### order()
+Order list ascending.
+```js
+[2, 3, 5, 1, 4].order(); // [1, 2, 3, 4, 5]
+['B', 'C', 'E', 'A', 'D'].order(); // ['A', 'B', 'C', 'D', 'E']
+```
+
+### orderBy(expression)
+Order list ascending by expression.
+```js
+let array = [
+    { id: 1, name: 'Goku', age: 22 },
+    { id: 2, name: 'Vegeta', age: 20 },
+    { id: 3, name: 'Bulma', age: 15 }
+];
+
+array.orderBy(x => x.age);
+console.log(array);
+/*
+OUTPUT:
+[
+    { id: 3, name: 'Bulma', age: 15 },
+    { id: 2, name: 'Vegeta', age: 20 },
+    { id: 1, name: 'Goku', age: 22 }
+]
+*/
+
+array.orderBy(x => x.name);
+console.log(array);
+/*
+OUTPUT:
+[
+    { id: 3, name: 'Bulma', age: 15 },
+    { id: 1, name: 'Goku', age: 22 },
+    { id: 2, name: 'Vegeta', age: 20 }
+]
+*/
+
+[5, 4, 3, 2, 1].orderBy(x => x); // [1, 2, 3, 4, 5] - Same as .order()
+```
+
+### orderByDesc(expression)
+Order list descending by expression.
+```js
+let array = [
+    { id: 1, name: 'Goku', age: 15 },
+    { id: 2, name: 'Vegeta', age: 20 },
+    { id: 3, name: 'Bulma', age: 22 }
+];
+
+array.orderByDesc(x => x.age);
+console.log(array);
+/*
+OUTPUT:
+[
+    { id: 3, name: 'Bulma', age: 22 },
+    { id: 2, name: 'Vegeta', age: 20 },
+    { id: 1, name: 'Goku', age: 15 }
+]
+*/
+
+array.orderByDesc(x => x.name);
+console.log(array);
+/*
+OUTPUT:
+[
+    { id: 2, name: 'Vegeta', age: 20 },
+    { id: 1, name: 'Goku', age: 15 },
+    { id: 3, name: 'Bulma', age: 22 }
+]
+*/
+
+[1, 2, 3, 4, 5].orderByDesc(x => x); // [5, 4, 3, 2, 1] - Same as .orderDesc()
+```
+
+### orderDesc()
+Order list descending.
+```js
+[2, 3, 5, 1, 4].orderDesc(); // [5, 4, 3, 2, 1]
+['B', 'C', 'E', 'A', 'D'].orderDesc(); // ['E', 'D', 'C', 'B', 'A']
+```
+
+### remove(condition?)
+Remove items from the list.
+```js
+let array = [
+    { id: 1, name: 'Goku' },
+    { id: 2, name: 'Vegeta' }
+];
+
+//By Condition
+array.remove(x => x.id == 2);
+console.log(array); //OUTPUT: [{ id: 1, name: 'Goku' }]
+
+//By Ref
+let goku = array.first(x => x.id == 1);
+array.remove(goku);
+console.log(array); //OUTPUT: []
+```
+
+### removeAt(index)
+Remove a item from the list by index.
+```js
+let array = [
+    { id: 1, name: 'Goku' },
+    { id: 2, name: 'Vegeta' }
+];
+
+array.removeAt(1);
+console.log(array); //OUTPUT: [{ id: 1, name: 'Goku' }]
+```
+
+### select(expression)
+Transform your list.
+```js
+let array = [
+    { id: 1, name: 'Goku' },
+    { id: 2, name: 'Vegeta' }
+];
+
+array.select(x => x.id); // [1, 2]
+array.select(x => x.id + 1); // [2, 3]
+array.select(x => x.name + ' is very strong'); // ['Goku is very strong', 'Vegeta is very strong']
+
+array.select(x => x = { user: x.id + ' - ' + x.name }); 
+/*
+OUTPUT:
+[
+    { user: '1 - Goku' },
+    { user: '2 - Vegeta' }
+]
+*/
+```
+
+### selectMany(expression)
+Joins multiple lists inside a object in one.
+```js
+let array = [
+    { id: 1, name: 'Goku', friends: ['Chi-Chi', 'Kuririn', 'Trunks', 'Gohan'] },
+    { id: 2, name: 'Vegeta', friends: ['Bulma', 'Trunks'] }
+];
+
+let allFriends = array.selectMany(x => x.friends);
+console.log(allFriends); // ['Chi-Chi', 'Kuririn', 'Trunks', 'Gohan', 'Bulma', 'Trunks']
+console.log(allFriends.distinct()); // ['Chi-Chi', 'Kuririn', 'Gohan', 'Bulma', 'Trunks']
+```
+
+### skip(length)
+Skip the length informed.
+```js
+let array = [
+    { id: 1, name: 'Goku' },
+    { id: 2, name: 'Vegeta' },
+    { id: 3, name: 'Bulma' }
+];
+
+let arraySkipped = array.skip(2);
+console.log(arraySkipped); // [{ id: 3, name: 'Bulma' }]
+
+[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].skip(5); // [6, 7, 8, 9, 10]
+```
+
+### sum(expression?)
+Sum the items by expression.
+```js
+let array = [
+    { id: 1, name: 'Goku', power: 8001 },
+    { id: 2, name: 'Vegeta', power: 7000 }
+];
+
+array.sum(x => x.power); // 15001
+[1, 2, 3, 4, 5].sum(); // 15
+```
+
+### take(length)
+Take the length informed.
+```js
+let array = [
+    { id: 1, name: 'Goku' },
+    { id: 2, name: 'Vegeta' },
+    { id: 3, name: 'Bulma' }
+];
+
+let arrayTook = array.take(1);
+console.log(arrayTook); // [{ id: 1, name: 'Goku' }]
+
+arrayTook = array.skip(1).take(1);
+console.log(arrayTook); // [{ id: 2, name: 'Vegeta' }]
+
+[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].take(5); // [1, 2, 3, 4, 5]
+[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].skip(3).take(3); // [4, 5, 6]
+```
+
+### thenBy(expression)
+Order the list ascending by a second expression after some "order" method (order, orderBy, orderByDesc or orderDesc)
+```js
+let array = [
+    { id: 1, name: 'Goku', age: 20 },
+    { id: 2, name: 'Vegeta', age: 22 },
+    { id: 3, name: 'Bulma', age: 20 }
+];
+
+array.orderBy(x => x.age).thenBy(x => x.name);
+console.log(array);
+/*
+OUTPUT
+[
+    { id: 3, name: 'Bulma', age: 20 },
+    { id: 1, name: 'Goku', age: 20 },
+    { id: 2, name: 'Vegeta', age: 22 }
+]
+*/
+
+//Order the even first, then put them in the ascending order
+[10, 9, 8, 7, 6, 5, 4, 3, 2, 1].orderBy(x => x % 2 == 0 ? 0 : 1).thenBy(x => x);
+//OUTPUT: [2, 4, 6, 8, 10, 1, 3, 5, 7, 9]
+```
+
+### thenByDesc(expression)
+Order the list descending by a second expression after some "order" method (order, orderBy, orderByDesc or orderDesc)
+```js
+let array = [
+    { id: 1, name: 'Goku', age: 20 },
+    { id: 2, name: 'Vegeta', age: 22 },
+    { id: 3, name: 'Bulma', age: 20 }
+];
+
+array.orderBy(x => x.age).thenByDesc(x => x.name);
+console.log(array);
+/*
+OUTPUT
+[
+    { id: 1, name: 'Goku', age: 20 }
+    { id: 3, name: 'Bulma', age: 20 }
+    { id: 2, name: 'Vegeta', age: 22 }
+]
+*/
+
+//Order the even first, then put them in the descending order
+[10, 9, 8, 7, 6, 5, 4, 3, 2, 1].orderBy(x => x % 2 == 0 ? 0 : 1).thenByDesc(x => x);
+//OUTPUT: [10, 8, 6, 4, 2, 9, 7, 5, 3, 1]
+```
+
+### where(expression)
+```js
+let array = [
+    { id: 1, name: 'Goku', power: 8001 },
+    { id: 2, name: 'Vegeta', power: 7000 },
+    { id: 3, name: 'Bulma', power: 12 },
+];
+
+let strongers = array.where(x => x.power > 5000);
+console.log(strongers);
+/*
+OUTPUT:
+[
+    { id: 1, name: 'Goku', power: 8001 },
+    { id: 2, name: 'Vegeta', power: 7000 }
+]
+*/
+
+[1, 2, 3, 4, 5, 6].where(x => x % 2 == 0); // [2, 4, 6]
+```
