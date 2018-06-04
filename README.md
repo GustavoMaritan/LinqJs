@@ -20,7 +20,6 @@ require('devbox-linq');
 * [addRange](#addrangearray)
 * [all](#allcondition)
 * [any](#anycondition)
-* [asyncFor](#asyncforcallback)
 * [count](#countcondition)
 * [distinct](#distinct)
 * [distinctRecursive](#distinctrecursive)
@@ -133,14 +132,6 @@ let array = [
 array.any(x => x.id == 3); // false
 array.any(x => x.id == 1); // true
 array.any(); // true
-```
-
-### asyncFor(callback)
-Iterates asynchronous calls.
-```js
-await array.asyncFor(async () => {
-    await something();
-});
 ```
 
 ### count(condition?)

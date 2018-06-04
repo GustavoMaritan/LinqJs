@@ -1,6 +1,4 @@
-require('../lib/index.js');
-
-let assert = require('assert');
+/*
 
 function checkDistinctValues(fake, expectedLength) {
     let distinct = fake.distinct();
@@ -183,3 +181,4 @@ describe('testing "distinct" method', function () {
         }
     });
 });
+*/
