@@ -125,9 +125,9 @@ describe('.distinct()', () => {
         assert(checkDistinct([new Date(2018, 6, 4), new Date(2018, 6, 4), new Date(2018, 6, 4)], 1));
         assert(checkDistinct([new Date(2018, 6, 4), new Date(2018, 7, 4), new Date(2018, 6, 4)], 2));
         assert(checkDistinct([
-            new Date(2018, 6, 4), 
-            new Date(2018, 7, 4), 
-            new Date(2018, 6, 4), 
+            new Date(2018, 6, 4),
+            new Date(2018, 7, 4),
+            new Date(2018, 6, 4),
             new Date(2018, 7, 4)
         ], 2));
     });
@@ -258,17 +258,19 @@ describe('.distinctRecursive()', () => {
 describe('.first()', () => {
     test('first should throw an exception with empty array', () => {
         try {
-            assert.equal([].first(), undefined);
+            [].first();
+            assert(false);
         } catch (e) {
-            assert.equal(true);
+            assert(true);
         }
     });
 
     test('first should throw an exception if cannot find any that matches the condition', () => {
         try {
-            assert.equal([1, 2, 3].first(x => x == 4), undefined);
+            [1, 2, 3].first(x => x == 4);
+            assert(false);
         } catch (e) {
-            assert.equal(true);
+            assert(true);
         }
     });
 
@@ -282,29 +284,218 @@ describe('.first()', () => {
     });
 });
 
+describe('.firstOrDefault()', () => {
+    test('firstOrDefault should return undefined with empty array', () => {
+        assert.equal([].firstOrDefault(), undefined);
+    });
+
+    test('firstOrDefault should return undefined if cannot find any that matches the condition', () => {
+        assert.equal([1, 2, 3].firstOrDefault(x => x == 4), undefined);
+    });
+
+    let arr = [1, 2, 4, 3, 4, 5];
+    test('firstOrDefault should return the first item', () => assert.equal(arr.firstOrDefault(), 1));
+    test('firstOrDefault should return the first item that matches the condition', () => {
+        assert.equal(arr.firstOrDefault(x => x == 4), 4);
+    });
+    test('firstOrDefault should return the first item that matches the condition (even)', () => {
+        assert.equal(arr.firstOrDefault(x => x % 2 == 0), 2);
+    });
+});
+
+describe('.groupBy()', () => {
+    test('groupBy should group objects', () => {
+        let arr = [
+            { name: 'Name1', age: 10 },
+            { name: 'Name2', age: 20 },
+            { name: 'Name3', age: 10 },
+            { name: 'Name4', age: 20 },
+            { name: 'Name5', age: 10 },
+            { name: 'Name6', age: 30 }
+        ].groupBy(x => x.age);
+
+        assert.equal(arr[0].key, 10);
+        assert.equal(arr[0].length, 3);
+
+        assert.equal(arr[1].key, 20);
+        assert.equal(arr[1].length, 2);
+
+        assert.equal(arr[2].key, 30);
+        assert.equal(arr[2].length, 1);
+
+        assert.equal(arr.length, 3);
+    });
+
+    test('groupBy should group numbers', () => {
+        let arr = [
+            1, 2, 3,
+            1, 2,
+            1,
+        ].groupBy(x => x);
+
+        assert.equal(arr[0].key, 1);
+        assert.equal(arr[0].length, 3);
+
+        assert.equal(arr[1].key, 2);
+        assert.equal(arr[1].length, 2);
+
+        assert.equal(arr[2].key, 3);
+        assert.equal(arr[2].length, 1);
+
+        assert.equal(arr.length, 3);
+    });
+
+    test('groupBy should group strings', () => {
+        let arr = [
+            'a', 'b', 'c',
+            'a', 'b',
+            'a',
+        ].groupBy(x => x);
+
+        assert.equal(arr[0].key, 'a');
+        assert.equal(arr[0].length, 3);
+
+        assert.equal(arr[1].key, 'b');
+        assert.equal(arr[1].length, 2);
+
+        assert.equal(arr[2].key, 'c');
+        assert.equal(arr[2].length, 1);
+
+        assert.equal(arr.length, 3);
+    });
+
+    test('groupBy should group mixed array', () => {
+        let obj = { a: true };
+        let arr = [
+            1, 1,
+            2, '2',
+            'a', 'a', 'A',
+            obj, obj,
+            { a: true },
+            true, false,
+            true, false
+        ].groupBy(x => x);
+
+        assert.equal(arr[0].key, 1);
+        assert.equal(arr[0].length, 2);
+
+        assert.equal(arr[1].key, 2);
+        assert.equal(arr[1].length, 1);
+
+        assert.equal(arr[2].key, '2');
+        assert.equal(arr[2].length, 1);
+
+        assert.equal(arr[3].key, 'a');
+        assert.equal(arr[3].length, 2);
+
+        assert.equal(arr[4].key, 'A');
+        assert.equal(arr[4].length, 1);
+
+        assert.equal(arr[5].key, obj);
+        assert.equal(arr[5].length, 2);
+
+        assert.equal(arr[6].length, 1);
+
+        assert.equal(arr[7].key, true);
+        assert.equal(arr[7].length, 2);
+
+        assert.equal(arr[8].key, false);
+        assert.equal(arr[8].length, 2);
+
+        assert.equal(arr.length, 9);
+    });
+});
+
 describe('.last()', () => {
     test('last should throw an exception with empty array', () => {
         try {
-            assert.equal([].last(), undefined);
+            [].last();
+            assert(false);
         } catch (e) {
-            assert.equal(true);
+            assert(true);
         }
     });
 
     test('last should throw an exception if cannot find any that matches the condition', () => {
         try {
-            assert.equal([1, 2, 3].last(x => x == 4), undefined);
+            [1, 2, 3].last(x => x == 4);
+            assert(false);
         } catch (e) {
-            assert.equal(true);
+            assert(true);
         }
     });
 
     let arr = [1, 2, 4, 3, 4, 5];
-    test('last should return the last item', () => assert.equal(arr.last(), 5));
+    test('last should return t7e last item', () => assert.equal(arr.last(), 5));
     test('last should return the last item that matches the condition', () => {
         assert.equal(arr.last(x => x == 4), 4);
     });
     test('last should return the last item that matches the condition (even)', () => {
         assert.equal(arr.last(x => x % 2 == 0), 4);
+    });
+});
+
+describe('.lastOrDefault()', () => {
+    test('lastOrDefault should return undefined with empty array', () => {
+        assert.equal([].lastOrDefault(), undefined);
+    });
+
+    test('lastOrDefault should return undefined if cannot find any that matches the condition', () => {
+        assert.equal([1, 2, 3].lastOrDefault(x => x == 4), undefined);
+    });
+
+    let arr = [1, 2, 4, 3, 4, 5];
+    test('lastOrDefault should return the last item', () => assert.equal(arr.lastOrDefault(), 5));
+    test('lastOrDefault should return the last item that matches the condition', () => {
+        assert.equal(arr.lastOrDefault(x => x == 4), 4);
+    });
+    test('lastOrDefault should return the last item that matches the condition (even)', () => {
+        assert.equal(arr.lastOrDefault(x => x % 2 == 0), 4);
+    });
+});
+
+describe('.max()', () => {
+    test('max should return 0 with empty array', () => {
+        assert.equal([].max(), 0);
+    });
+
+    test('max should return maximum value', () => {
+        assert.equal([1, 2, 5, 3, 4].max(), 5);
+    });
+
+    test('max should return maximum value that matches the expression (object)', () => {
+        assert.equal([
+            { age: 10 },
+            { age: 20 },
+            { age: 40 },
+            { age: 30 }
+        ].max(x => x.age), 40);
+    });
+
+    test('max should return maximum value that matches the expression', () => {
+        assert.equal([1, 2, 3, 4, 5].max(x => x % 2 == 0 ? x : Number.MIN_VALUE), 4);
+    });
+});
+
+describe('.min()', () => {
+    test('min should return 0 with empty array', () => {
+        assert.equal([].min(), 0);
+    });
+
+    test('min should return minimum value', () => {
+        assert.equal([5, 2, 1, 3, 4].min(), 1);
+    });
+
+    test('min should return minimum value that matches the expression (object)', () => {
+        assert.equal([
+            { age: 40 },
+            { age: 20 },
+            { age: 10 },
+            { age: 30 }
+        ].min(x => x.age), 10);
+    });
+
+    test('min should return minimum value that matches the expression', () => {
+        assert.equal([1, 2, 3, 4, 5].min(x => x % 2 == 0 ? x : Number.MAX_VALUE), 2);
     });
 });
