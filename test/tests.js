@@ -67,20 +67,6 @@ describe('.count()', () => {
     });
 });
 
-describe('.sum()', () => {
-    test('empty array should return 0', () => assert.equal([].sum(), 0));
-    test('sum array of numbers', () => assert.equal([1, 2, 3, 4].sum(), 10));
-    test('sum array of numbers with condition', () => {
-        assert.equal([1, 2, 3, 4, 5, 6, 7, 8, 9].sum(x => x % 2 == 0 ? x : 0), 20);
-    });
-    test('sum array of objects', () => {
-        assert.equal([{ age: 10 }, { age: 20 }, { age: 30 }].sum(x => x.age), 60);
-    });
-    test('sum array of objects with condition', () => {
-        assert.equal([{ age: 10 }, { age: 20 }, { age: 30 }].sum(x => x.age >= 20 ? x.age : 0), 50);
-    });
-});
-
 describe('.distinct()', () => {
     function checkDistinct(arr, expectedLength) {
         let distinct = arr.distinct();
@@ -498,4 +484,167 @@ describe('.min()', () => {
     test('min should return minimum value that matches the expression', () => {
         assert.equal([1, 2, 3, 4, 5].min(x => x % 2 == 0 ? x : Number.MAX_VALUE), 2);
     });
+});
+
+describe('.order()', () => {
+
+});
+
+describe('.orderBy()', () => {
+
+});
+
+describe('.orderByDesc()', () => {
+
+});
+
+describe('.orderDesc()', () => {
+
+});
+
+describe('.remove()', () => {
+    test('remove should remove one single equal item', () => {
+        let arr = [1, 2, 3, 4, 2];
+        arr.remove(2);
+        assert.equal(arr.length, 4);
+    });
+    test('remove should remove one single object by reference', () => {
+        let obj = { a: 1 };
+        let arr = [obj, { a: 1 }, obj];
+        arr.remove(obj);
+        assert.equal(arr.length, 2);
+    });
+    test('remove should remove all items that match the condition', () => {
+        let arr = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+        arr.remove(x => x % 2 == 0);
+        assert.equal(arr.length, 5);
+    });
+    test('remove should remove all items that match the condition (object)', () => {
+        let obj = { a: 1 };
+        let arr = [obj, { a: 1 }, obj];
+        arr.remove(x => x.a === 1);
+        assert.equal(arr.length, 0);
+    });
+});
+
+describe('.removeAt()', () => {
+    test('removeAt should remove by index', () => {
+        let arr = [1, 2, 3, 4, 2];
+        arr.removeAt(2);
+        assert.equal(arr.length, 4);
+        assert.equal(arr.indexOf(3), -1);
+    });
+    test('removeAt should remove nothing if cannot find', () => {
+        let arr = [1, 2, 3, 4, 2];
+        arr.removeAt(7);
+        assert.equal(arr.length, 5);
+        assert.equal(arr.indexOf(3), 2);
+    });
+});
+
+describe('.select()', () => {
+    test('select should transform array of objects into a array of numbers', () => {
+        let arr = [
+            { a: 1 },
+            { a: 2 },
+            { a: 3 }
+        ];
+
+        let arrSelect = arr.select(x => x.a);
+        assert.equal(arrSelect.length, arr.length);
+        assert.equal(arrSelect[0], 1);
+        assert.equal(arrSelect[1], 2);
+        assert.equal(arrSelect[2], 3);
+    });
+
+    test('select should transform array of objects into another array of objects', () => {
+        let arr = [
+            { a: 1 },
+            { a: 2 },
+            { a: 3 }
+        ];
+
+        let arrSelect = arr.select(x => x = { b: x.a });
+        assert.equal(arrSelect.length, arr.length);
+        assert.equal(arrSelect[0].b, 1);
+        assert.equal(arrSelect[1].b, 2);
+        assert.equal(arrSelect[2].b, 3);
+    });
+});
+
+describe('.selectMany()', () => {
+    test('selectMany should join arrays into a single one', () => {
+        let arr = [
+            [1, 2, 3],
+            [4, 5, 6],
+            [7, 8, 9]
+        ];
+
+        let arrSelectMany = arr.selectMany(x => x);
+        assert.equal(arrSelectMany.length, 9);
+    });
+
+    test('selectMany should join arrays inside a object into a single one', () => {
+        let arr = [
+            { id: 1, phones: [123456789, 987654321, 04535632] },
+            { id: 2, phones: [12342345, 456321567, 987654321] },
+            { id: 3, phones: [69765432, 76854321, 3425678543] }
+        ];
+
+        let arrSelectMany = arr.selectMany(x => x.phones);
+        assert.equal(arrSelectMany.length, 9);
+    });
+});
+
+describe('.skip()', () => {
+    test('skip should return empty array with empty array', () => {
+        assert.equal([].skip(3).length, 0);
+    });
+    test('skip should return empty array if jump all', () => {
+        assert.equal([1, 2, 3, 4, 5].skip(5).length, 0);
+    });
+    test('skip should jump 2 index', () => {
+        assert.equal([1, 2, 3, 4, 5].skip(2).length, 3);
+    });
+});
+
+describe('.sum()', () => {
+    test('empty array should return 0', () => assert.equal([].sum(), 0));
+    test('sum array of numbers', () => assert.equal([1, 2, 3, 4].sum(), 10));
+    test('sum array of numbers with condition', () => {
+        assert.equal([1, 2, 3, 4, 5, 6, 7, 8, 9].sum(x => x % 2 == 0 ? x : 0), 20);
+    });
+    test('sum array of objects', () => {
+        assert.equal([{ age: 10 }, { age: 20 }, { age: 30 }].sum(x => x.age), 60);
+    });
+    test('sum array of objects with condition', () => {
+        assert.equal([{ age: 10 }, { age: 20 }, { age: 30 }].sum(x => x.age >= 20 ? x.age : 0), 50);
+    });
+});
+
+describe('.take()', () => {
+    test('take should return empty array with empty array (take 3)', () => {
+        assert.equal([].take(3).length, 0);
+    });
+    test('take should return 2 indexs with array of 5 positions (take 2)', () => {
+        assert.equal([1, 2, 3, 4, 5].take(2).length, 2);
+    });
+    test('take should return 5 indexs with array of 7 positions (take 5)', () => {
+        assert.equal([1, 2, 3, 4, 5, 6, 7].take(5).length, 5);
+    });
+    test('take should return 2 indexs with array of 2 positions (take 5)', () => {
+        assert.equal([1, 2].take(5).length, 2);
+    });
+});
+
+describe('.thenBy()', () => {
+
+});
+
+describe('.thenByDesc()', () => {
+
+});
+
+describe('.where()', () => {
+
 });
