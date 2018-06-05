@@ -1,20 +1,25 @@
+# DEVBOX-LINQ
+
 [![Build Status](https://travis-ci.org/GustavoMaritan/LinqJs.svg?branch=master)](https://travis-ci.org/GustavoMaritan/LinqJs)
 
-# DEVBOX-LINQ
 Lambda operations for js inspired by C# :)
 
 ## Installation
+
 ```shell
 npm install devbox-linq
 ```
 
 ## Usage (Node.js)
+
 ```js
 require('devbox-linq');
 ```
+
 > only works on v6 and above
 
 ## Documentation
+
 * [add](#additem)
 * [addRange](#addrangearray)
 * [all](#allcondition)
@@ -45,7 +50,9 @@ require('devbox-linq');
 * [where](#whereexpression)
 
 ### add(item)
+
 Add a item into a existing array.
+
 ```js
 let array = [{ id: 1, name: 'Goku' }];
 
@@ -62,7 +69,9 @@ OUTPUT:
 ```
 
 ### addRange(...array)
+
 Add a list of items into a existing array.
+
 ```js
 //Way 1
 let array1 = [
@@ -87,6 +96,7 @@ OUTPUT:
 ]
 */
 ```
+
 ```js
 //Way 2
 let array = [
@@ -109,7 +119,9 @@ OUTPUT:
 ```
 
 ### all(condition)
+
 Checks that all items in the list match the condition.
+
 ```js
 let array = [
     { id: 1, name: 'Goku' },
@@ -121,7 +133,9 @@ array.all(x => x.id >= 1);  // true
 ```
 
 ### any(condition?)
+
 Checks that one item in the list match the condition. If no condition, check if has something in the list.
+
 ```js
 let array = [
     { id: 1, name: 'Goku' },
@@ -134,7 +148,9 @@ array.any(); // true
 ```
 
 ### count(condition?)
+
 Count all items that match the condition. If no condition, returns the list length.
+
 ```js
 let array = [
     { id: 1, name: 'Goku' },
@@ -145,7 +161,9 @@ array.count(); //2
 ```
 
 ### distinct()
+
 Distinguishes equal items from the list. If it's complex type, like object and array, it'll be by reference.
+
 ```js
 let array = [
     { text: 'Object' },
@@ -171,7 +189,9 @@ OUTPUT:
 ```
 
 ### distinctRecursive()
+
 Distinguishes equal items from the list. If it's complex type, like object, it'll be done verifying the attributes.
+
 ```js
 let array = [
     { text: 'Object' },
@@ -194,7 +214,9 @@ OUTPUT:
 ```
 
 ### first(condition?)
+
 Returns the first item that match the condition.
+
 ```js
 let array = [
     { id: 1, name: 'Goku' },
@@ -210,7 +232,9 @@ array.first(x => x.id == 3); // throws exception
 ```
 
 ### firstOrDefault(condition?)
+
 Returns the first item that match the condition, if anyone match, returns undefined instead exception.
+
 ```js
 let array = [
     { id: 1, name: 'Goku' },
@@ -226,7 +250,9 @@ array.firstOrDefault(x => x.id == 10); // undefined
 ```
 
 ### groupBy(expression)
+
 Group the list by a expression.
+
 ```js
 let array = [
     { id: 1, name: 'Goku', age: 20 },
@@ -254,7 +280,9 @@ console.log(group[1].key); // 19
 ```
 
 ### last(condition?)
+
 Returns the last item that match the condition.
+
 ```js
 let array = [
     { id: 1, name: 'Goku' },
@@ -270,7 +298,9 @@ array.last(x => x.id == 3); // throws exception
 ```
 
 ### lastOrDefault(condition?)
+
 Returns the last item that match the condition, if anyone match, returns undefined instead exception.
+
 ```js
 let array = [
     { id: 1, name: 'Goku' },
@@ -286,7 +316,9 @@ array.lastOrDefault(x => x.id == 10); // undefined
 ```
 
 ### max(expression?)
+
 Returns the largest item that match the expression.
+
 ```js
 let array = [
     { id: 1, name: 'Goku', age: 22 },
@@ -298,7 +330,9 @@ array.max(x => x.age); // 22
 ```
 
 ### min(expression?)
+
 Returns the smallest item that match the expression.
+
 ```js
 let array = [
     { id: 1, name: 'Goku', age: 22 },
@@ -310,14 +344,18 @@ array.min(x => x.age); // 20
 ```
 
 ### order()
+
 Order list ascending.
+
 ```js
 [2, 3, 5, 1, 4].order(); // [1, 2, 3, 4, 5]
 ['B', 'C', 'E', 'A', 'D'].order(); // ['A', 'B', 'C', 'D', 'E']
 ```
 
 ### orderBy(expression)
+
 Order list ascending by expression.
+
 ```js
 let array = [
     { id: 1, name: 'Goku', age: 22 },
@@ -351,7 +389,9 @@ OUTPUT:
 ```
 
 ### orderByDesc(expression)
+
 Order list descending by expression.
+
 ```js
 let array = [
     { id: 1, name: 'Goku', age: 15 },
@@ -385,14 +425,18 @@ OUTPUT:
 ```
 
 ### orderDesc()
+
 Order list descending.
+
 ```js
 [2, 3, 5, 1, 4].orderDesc(); // [5, 4, 3, 2, 1]
 ['B', 'C', 'E', 'A', 'D'].orderDesc(); // ['E', 'D', 'C', 'B', 'A']
 ```
 
 ### remove(condition?)
+
 Remove items from the list.
+
 ```js
 let array = [
     { id: 1, name: 'Goku' },
@@ -410,7 +454,9 @@ console.log(array); //OUTPUT: []
 ```
 
 ### removeAt(index)
+
 Remove a item from the list by index.
+
 ```js
 let array = [
     { id: 1, name: 'Goku' },
@@ -422,7 +468,9 @@ console.log(array); //OUTPUT: [{ id: 1, name: 'Goku' }]
 ```
 
 ### select(expression)
+
 Transform your list.
+
 ```js
 let array = [
     { id: 1, name: 'Goku' },
@@ -444,7 +492,9 @@ OUTPUT:
 ```
 
 ### selectMany(expression)
+
 Joins multiple lists inside a object in one.
+
 ```js
 let array = [
     { id: 1, name: 'Goku', friends: ['Chi-Chi', 'Kuririn', 'Trunks', 'Gohan'] },
@@ -457,7 +507,9 @@ console.log(allFriends.distinct()); // ['Chi-Chi', 'Kuririn', 'Gohan', 'Bulma', 
 ```
 
 ### skip(length)
+
 Skip the length informed.
+
 ```js
 let array = [
     { id: 1, name: 'Goku' },
@@ -472,7 +524,9 @@ console.log(arraySkipped); // [{ id: 3, name: 'Bulma' }]
 ```
 
 ### sum(expression?)
+
 Sum the items by expression.
+
 ```js
 let array = [
     { id: 1, name: 'Goku', power: 8001 },
@@ -484,7 +538,9 @@ array.sum(x => x.power); // 15001
 ```
 
 ### take(length)
+
 Take the length informed.
+
 ```js
 let array = [
     { id: 1, name: 'Goku' },
@@ -503,7 +559,9 @@ console.log(arrayTook); // [{ id: 2, name: 'Vegeta' }]
 ```
 
 ### thenBy(expression)
+
 Order the list ascending by a second expression after some "order" method (order, orderBy, orderByDesc or orderDesc)
+
 ```js
 let array = [
     { id: 1, name: 'Goku', age: 20 },
@@ -528,7 +586,9 @@ OUTPUT
 ```
 
 ### thenByDesc(expression)
+
 Order the list descending by a second expression after some "order" method (order, orderBy, orderByDesc or orderDesc)
+
 ```js
 let array = [
     { id: 1, name: 'Goku', age: 20 },
@@ -553,6 +613,9 @@ OUTPUT
 ```
 
 ### where(expression)
+
+Filter items that matches the condition
+
 ```js
 let array = [
     { id: 1, name: 'Goku', power: 8001 },
