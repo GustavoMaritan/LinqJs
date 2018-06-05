@@ -487,19 +487,73 @@ describe('.min()', () => {
 });
 
 describe('.order()', () => {
-
+    test('order should order numbers', () => {
+        let arr = [9, 8, 7, 6, 5, 4, 3, 2, 1, 0].order();
+        for (let i = 0; i <= 9; i++)
+            assert.equal(arr[i], i);
+    });
+    test('order should order strings', () => {
+        let arrOrdered = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
+        let arr = ['J', 'I', 'H', 'G', 'F', 'E', 'D', 'C', 'B', 'A'].order();
+        for (let i = 0; i <= 9; i++)
+            assert.equal(arr[i], arrOrdered[i]);
+    });
 });
 
 describe('.orderBy()', () => {
+    test('orderBy should order by condition', () => {
+        let arr = [1, 2, 3, 4].orderBy(x => x % 2 == 0 ? 0 : 1);
+        assert.equal(arr[0], 2);
+        assert.equal(arr[1], 4);
+        assert.equal(arr[2], 1);
+        assert.equal(arr[3], 3);
+    });
+    test('orderBy should order by expression', () => {
+        let arr = [
+            { name: 'Name1', age: 20 },
+            { name: 'Name2', age: 30 },
+            { name: 'Name3', age: 10 }
+        ].orderBy(x => x.age);
 
+        assert.equal(arr[0].age, 10);
+        assert.equal(arr[1].age, 20);
+        assert.equal(arr[2].age, 30);
+    });
 });
 
 describe('.orderByDesc()', () => {
+    test('orderByDesc should order by condition descending', () => {
+        let arr = [1, 2, 3, 4].orderByDesc(x => x % 2 != 0 ? 1 : 0);
+        assert.equal(arr[0], 1);
+        assert.equal(arr[1], 3);
+        assert.equal(arr[2], 2);
+        assert.equal(arr[3], 4);
+    });
+    test('orderByDesc should order by expression descending', () => {
+        let arr = [
+            { name: 'Name1', age: 20 },
+            { name: 'Name2', age: 30 },
+            { name: 'Name3', age: 10 }
+        ].orderByDesc(x => x.age);
 
+        assert.equal(arr[0].age, 30);
+        assert.equal(arr[1].age, 20);
+        assert.equal(arr[2].age, 10);
+    });
 });
 
 describe('.orderDesc()', () => {
-
+    test('orderDesc should order numbers descending', () => {
+        let arr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9].orderDesc();
+        for (let i = 9; i >= 0; i--)
+            assert.equal(arr[arr.length - 1 - i], i);
+    });
+    test('orderDesc should order strings descending', () => {
+        let arrOrdered = ['J', 'I', 'H', 'G', 'F', 'E', 'D', 'C', 'B', 'A'];
+        let arr = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'].orderDesc();
+        for (let i = 0; i <= 9; i++)
+            assert.equal(arr[i], arrOrdered[i]);
+    });
 });
 
 describe('.remove()', () => {
@@ -638,13 +692,95 @@ describe('.take()', () => {
 });
 
 describe('.thenBy()', () => {
+    let arr = [
+        { name: 'A', age: 20 },
+        { name: 'C', age: 20 },
+        { name: 'B', age: 20 },
 
+        { name: 'E', age: 10 },
+        { name: 'F', age: 10 },
+        { name: 'D', age: 10 }
+    ];
+
+    test('thenBy should order a ordered list by a second condition', () => {
+        arr.orderByDesc(x => x.age).thenBy(x => x.name);
+        
+        assert.equal(arr[0].age, 20);
+        assert.equal(arr[0].name, 'A');
+        assert.equal(arr[1].age, 20);
+        assert.equal(arr[1].name, 'B');
+        assert.equal(arr[2].age, 20);
+        assert.equal(arr[2].name, 'C');
+
+        assert.equal(arr[3].age, 10);
+        assert.equal(arr[3].name, 'D');
+        assert.equal(arr[4].age, 10);
+        assert.equal(arr[4].name, 'E');
+        assert.equal(arr[5].age, 10);
+        assert.equal(arr[5].name, 'F');
+    });
 });
 
 describe('.thenByDesc()', () => {
+    let arr = [
+        { name: 'B', age: 20 },
+        { name: 'C', age: 20 },
+        { name: 'A', age: 20 },
 
+        { name: 'D', age: 10 },
+        { name: 'F', age: 10 },
+        { name: 'E', age: 10 }
+    ];
+
+    test('thenByDesc should order a ordered list by a second condition descending', () => {
+        arr.orderBy(x => x.age).thenByDesc(x => x.name);
+
+        assert.equal(arr[0].age, 10);
+        assert.equal(arr[0].name, 'F');
+        assert.equal(arr[1].age, 10);
+        assert.equal(arr[1].name, 'E');
+        assert.equal(arr[2].age, 10);
+        assert.equal(arr[2].name, 'D');
+
+        assert.equal(arr[3].age, 20);
+        assert.equal(arr[3].name, 'C');
+        assert.equal(arr[4].age, 20);
+        assert.equal(arr[4].name, 'B');
+        assert.equal(arr[5].age, 20);
+        assert.equal(arr[5].name, 'A');
+    });
 });
 
 describe('.where()', () => {
+    let obj = { name: 'Name4', age: 20 };
+    let arr = [
+        { name: 'Name1', age: 10 },
+        { name: 'Name2', age: 10 },
+        { name: 'Name3', age: 10 },
+        obj,
+        { name: 'Name5', age: 20 },
+        { name: 'Name6', age: 30 }
+    ];
 
+    test('where should filter by expression (number)', () => {
+        assert.equal(arr.where(x => x.age == 10).length, 3);
+        assert.equal(arr.where(x => x.age == 20).length, 2);
+        assert.equal(arr.where(x => x.age == 30).length, 1);
+        assert.equal(arr.where(x => x.age > 30).length, 0);
+        assert.equal(arr.where(x => x.age <= 30).length, 6);
+    });
+
+    test('where should filter by expression (string)', () => {
+        assert.equal(arr.where(x => x.name.indexOf('Name') >= 0).length, 6);
+        assert.equal(arr.where(x => x.name == 'Name3').length, 1);
+    });
+
+    test('where should filter by expression (boolean)', () => {
+        assert.equal(arr.where(x => true).length, 6);
+        assert.equal(arr.where(x => false).length, 0);
+    });
+
+    test('where should filter by expression (object)', () => {
+        assert.equal(arr.where(x => x == obj).length, 1);
+    });
 });
