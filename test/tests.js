@@ -486,6 +486,25 @@ describe('.min()', () => {
     });
 });
 
+describe('.average()', () => {
+    test('average should return 0 with empty array', () => {
+        assert.equal([].average(), 0);
+    });
+
+    test('average should return the average value', () => {
+        assert.equal([10, 20, 30].average(), 20);
+    });
+
+    test('average should return average value that matches the expression (object)', () => {
+        assert.equal([
+            { age: 10 },
+            { age: 20 },
+            { age: 10 },
+            { age: 0 }
+        ].average(x => x.age), 10);
+    });
+});
+
 describe('.order()', () => {
     test('order should order numbers', () => {
         let arr = [9, 8, 7, 6, 5, 4, 3, 2, 1, 0].order();

@@ -28,6 +28,8 @@ interface Array<T> {
 
     min(predicate?: (item: T) => boolean): T
 
+    average(predicate?: (item: T) => boolean): T
+
     order(): Array<T>
 
     orderBy(predicate: (item: T) => boolean): Array<T>

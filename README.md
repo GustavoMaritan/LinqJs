@@ -34,6 +34,7 @@ require('devbox-linq');
 * [lastOrDefault](#lastordefaultcondition)
 * [max](#maxexpression)
 * [min](#minexpression)
+* [average](#averageexpression)
 * [order](#order)
 * [orderBy](#orderbyexpression)
 * [orderByDesc](#orderbydescexpression)
@@ -341,6 +342,15 @@ let array = [
 
 array.min(x => x.age); // 20
 [1, 5, 3].min(); // 1
+```
+
+### average(expression?)
+
+Returns the average of list that match the expression.
+
+```js
+
+[10, 20, 30].average(); // 20
 ```
 
 ### order()
